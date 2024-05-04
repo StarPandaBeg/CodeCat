@@ -3,6 +3,10 @@
 {% from 'macro/wrapper.jinja' import wrap %}
 {% from 'macro/block.jinja' import block, block_title, block_row %}
 
+{% block title %}
+{{ contest.name }}
+{% endblock %}
+
 {% block column_a %}
 <div class="contest-view">
   {% call wrap("Задачи") %}
@@ -16,62 +20,32 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="failed">
+      {% for problem in contest.problems %}
+      <tr class="{{ problem.css_class }}">
         <td>
-          <a href="#">A</a>
+          <a href="/problems/{{ problem.id }}">{{ problem.letter }}</a>
         </td>
         <td>
-          <a href="#">Монокарп и множество</a>
+          <a href="/problems/{{ problem.id }}">{{ problem.name }}</a>
         </td>
-        <td width="30%">
-          {{ chip("Комбинаторика") }}
+        <td>
+          {% for tag in problem.tags %}
+          {{ chip(tag.tag) }}
+          {% endfor %}
         </td>
         <td align="right">
-          <span class="icon mdi mdi-clock-alert-outline mdi-24px" title="Выход за время"></span>
-        </td>
-      </tr>
-      <tr class="failed">
-        <td>
-          <a href="#">B</a>
-        </td>
-        <td>
-          <a href="#">Монокарп и множество</a>
-        </td>
-        <td width="30%">
-          {{ chip("Комбинаторика") }}
-        </td>
-        <td align="right">
-          <span class="icon mdi mdi-alert-circle-outline mdi-24px" title="Неверный алгоритм"></span>
-        </td>
-      </tr>
-      <tr class="solved">
-        <td>
-          <a href="#">C</a>
-        </td>
-        <td>
-          <a href="#">Монокарп и множество</a>
-        </td>
-        <td width="30%">
-          {{ chip("Комбинаторика") }}
-        </td>
-        <td align="right">
+          {% if problem.status.name == "solved" %}
           <span class="icon mdi mdi-check-circle-outline mdi-24px" title="Решено"></span>
+          {% elif problem.status.name == "time_exceed" %}
+          <span class="icon mdi mdi-clock-alert-outline mdi-24px" title="Выход за время"></span>
+          {% elif problem.status.name == "memory_exceed" %}
+          <span class="icon mdi mdi-memory mdi-24px" title="Выход за объём памяти"></span>
+          {% elif problem.status.name == "wrong" %}
+          <span class="icon mdi mdi-alert-circle-outline mdi-24px" title="Неверный алгоритм"></span>
+          {% endif %}
         </td>
       </tr>
-      <tr>
-        <td>
-          <a href="#">D</a>
-        </td>
-        <td>
-          <a href="#">Монокарп и множество</a>
-        </td>
-        <td width="30%">
-          {{ chip("Комбинаторика") }}
-        </td>
-        <td align="right">
-
-        </td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
   {% endcall %}
@@ -80,16 +54,31 @@
 
 {% block column_b %}
 {% call block() %}
-{{ block_title("Тренировочный полигон (алгоритмика)") }}
+{{ block_title(contest.name, contest.link) }}
 
+{% if contest.description %}
 {% call block_row() %}
-Краткое описание
+{{ contest.description }}
 {% endcall %}
+{% endif %}
 
 {% call block_row() %}
-<p><b>Завершен:</b> 01.01.1970</p>
-<p title="Решено / Ошибка / Не начато"><b>Статистика:</b> 1/2/1</p>
-<p><b>Всего:</b> 1/4</p>
+<p><b>Завершен:</b> {{ contest.date.strftime('%d.%m.%Y') }}</p>
+<p title="Решено / Ошибка / Не начато">
+  <b>Статистика:</b>
+  {{ contest.problems|map(attribute="status")|selectattr("name", "eq", "solved")|list|length -}}
+  /
+  {{- contest.problems|map(attribute="status")|selectattr("name", "in", ["time_exceed", "memory_exceed",
+  "wrong"])|list|length -}}
+  /
+  {{- contest.problems|map(attribute="status")|selectattr("name", "eq", "none")|list|length -}}
+</p>
+<p>
+  <b>Всего:</b>
+  {{ contest.problems|map(attribute="status")|selectattr("name", "eq", "solved")|list|length -}}
+  /
+  {{- contest.problems|length }}
+</p>
 {% endcall %}
 
 {% endcall %}

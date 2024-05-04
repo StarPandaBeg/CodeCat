@@ -12,4 +12,5 @@ def index():
 
 @bp.route("/<id>")
 def view(id):
-    return render_template("contest-view.jinja", id=id)
+    contest = Contest.query.get(id)
+    return render_template("contest-view.jinja", contest=contest)

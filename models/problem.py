@@ -48,6 +48,16 @@ class Problem(Base):
         secondary=tag_association_table, back_populates="problems"
     )
 
+    @property
+    def css_class(self):
+        match self.status.value:
+            case ProblemStatus.solved.value:
+                return "solved"
+            case ProblemStatus.time_exceed.value | ProblemStatus.memory_exceed.value | ProblemStatus.wrong.value:
+                return "failed"
+            case _:
+                return ''
+
 
 class ProblemTag(Base):
     __tablename__ = 'tags'
