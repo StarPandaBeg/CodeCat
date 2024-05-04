@@ -29,7 +29,7 @@
 {% call block_row() %}
 <span class="actions">
   <p><button type="submit" form="form">Сохранить</button></p>
-  <p><a href="/contests">Отмена</a></p>
+  <p><a href="{{ url_for('contest.index') }}">Отмена</a></p>
 </span>
 {% endcall %}
 

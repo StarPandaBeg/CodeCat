@@ -32,7 +32,7 @@
           {{- contest.problems|length }}
         </td>
         <td align="right">
-          <a href="/contests/{{ contest.id }}">Подробнее</a>
+          <a href="{{ url_for('contest.view', id=contest.id) }}">Подробнее</a>
         </td>
       </tr>
       {% endfor %}
@@ -40,7 +40,7 @@
   </table>
   {%endcall%}
   <div class="contest__new">
-    <a href="/contests/new">Добавить</a>
+    <a href="{{ url_for('contest.create_get') }}">Добавить</a>
   </div>
 </div>
 {% endblock %}

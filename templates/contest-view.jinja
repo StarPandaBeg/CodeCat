@@ -23,10 +23,10 @@
       {% for problem in contest.problems %}
       <tr class="{{ problem.css_class }}">
         <td>
-          <a href="/problems/{{ problem.id }}">{{ problem.letter }}</a>
+          <a href="{{ url_for('problem.view', id=problem.id) }}">{{ problem.letter }}</a>
         </td>
         <td>
-          <a href="/problems/{{ problem.id }}">{{ problem.name }}</a>
+          <a href="{{ url_for('problem.view', id=problem.id) }}">{{ problem.name }}</a>
         </td>
         <td>
           {% for tag in problem.tags %}
