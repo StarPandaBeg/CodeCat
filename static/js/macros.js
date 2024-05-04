@@ -6,3 +6,14 @@ function toggleSpoiler(id, state = undefined) {
   }
   spoiler.classList.toggle("spoiler-opened", state);
 }
+
+function copyableCopy(id) {
+  const copyable = document.querySelector(
+    `.copyable[data-copyable-id='${id}'] .copyable__content`
+  );
+  if (!copyable) {
+    console.warn(`Copyable with id ${id} is not found`);
+    return;
+  }
+  navigator.clipboard.writeText(copyable.textContent);
+}

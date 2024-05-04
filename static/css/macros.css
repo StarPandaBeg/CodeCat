@@ -91,3 +91,26 @@
 .spoiler.spoiler-opened .spoiler__content {
   display: block;
 }
+.copyable {
+  width: 100%;
+  border: 1px solid #999;
+}
+
+.copyable .copyable__title {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #999;
+}
+
+.copyable .copyable__title a{
+  color: darkblue;
+}
+
+.copyable .copyable__content {
+  padding: 5px;
+  font-family: monospace;
+  white-space: preserve-breaks;
+  background: #f0f0f0;
+  color: #800;
+}

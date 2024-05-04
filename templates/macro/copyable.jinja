@@ -1,0 +1,15 @@
+{% from 'macro/util/random.jinja' import random_string %}
+
+{% macro copyable(title, code = False, lang = '') -%}
+{% set copyable_id = random_string(16) %}
+<div class="copyable" data-copyable-id="{{ copyable_id }}">
+  <div class="copyable__title">
+    <div>{{ title }}</div>
+    <div>
+      <a href="javascript:void(0)" onclick="copyableCopy('{{ copyable_id }}')">копировать</a>
+    </div>
+  </div>
+  <pre
+    class="copyable__content{{' copyable__content-code' if code else ''}}">{% if code %}<code class="lang-{{lang}}">{{caller()}}</code>{% else %}{{caller()}}{% endif %}</pre>
+</div>
+{%- endmacro %}
