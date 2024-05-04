@@ -2,7 +2,7 @@
 
 {% extends 'base/two-column.jinja' %}
 {% from 'macro/wrapper.jinja' import wrap %}
-{% from 'macro/block.jinja' import block, block_title, block_row %}
+{% from 'macro/blocks.jinja' import block_actions %}
 {% from 'macro/input.jinja' import input_row %}
 
 {% block title %}
@@ -23,34 +23,5 @@
 {% endblock %}
 
 {% block column_b %}
-{% call block() %}
-
-{{ block_title("Действия") }}
-{% call block_row() %}
-<span class="actions">
-  <p><button type="submit" form="form">Сохранить</button></p>
-  <p><a href="{{ url_for('contest.index') }}">Отмена</a></p>
-</span>
-{% endcall %}
-
-{% endcall %}
-{% endblock %}
-
-{% block style %}
-{{ super() }}
-<style>
-  .actions a {
-    color: darkblue;
-  }
-
-  .actions button {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: darkblue;
-    font-size: 1rem;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-</style>
+{{ block_actions(url_for('contest.index')) }}
 {% endblock %}

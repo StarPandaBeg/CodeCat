@@ -3,7 +3,7 @@
 {% extends 'base/two-column.jinja' %}
 {% from 'macro/wrapper.jinja' import wrap %}
 {% from 'macro/block.jinja' import block, block_title, block_row %}
-{% from 'macro/block-search.jinja' import block_search %}
+{% from 'macro/blocks.jinja' import block_search %}
 
 {% block title %}
 Соревнования
@@ -46,12 +46,7 @@
 {% endblock %}
 
 {% block column_b %}
-
-{% call block() %}
-{{ block_title("Поиск") }}
 {{ block_search("/contests/search") }}
-{% endcall %}
-
 {% endblock %}
 
 {% block style %}
