@@ -1,0 +1,17 @@
+{% macro input_row(field, label) %}
+<div class="input-row">
+  <div class="input-row__content">
+    <label for="{{field.name}}">{{label}}</label>
+    <div class="input-row__input">
+      {{ field(class_='input') }}
+      {% if field.errors %}
+      <ul class="input-row__errors">
+        {% for error in field.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endmacro %}

@@ -39,6 +39,9 @@
     </tbody>
   </table>
   {%endcall%}
+  <div class="contest__new">
+    <a href="/contests/new">Добавить</a>
+  </div>
 </div>
 {% endblock %}
 
@@ -60,6 +63,17 @@
 
   .contest .contest__header {
     font-size: 1.2rem;
+  }
+
+  .contest .contest__new {
+    padding-top: 5px;
+    text-align: right;
+    font-size: .8rem;
+  }
+
+  .contest .contest__new a {
+    color: darkblue;
+    opacity: .75;
   }
 </style>
 {% endblock %}

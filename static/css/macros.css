@@ -119,3 +119,38 @@
   background: #f0f0f0;
   color: #800;
 }
+
+.input-row .input-row__content {
+  display: flex;
+  gap: 10px;
+}
+
+.input-row:not(:first-child) {
+  padding-top: 10px;
+}
+
+.input-row .input-row__content label {
+  padding-top: 5px;
+  display: inline-block;
+  width: 20%;
+}
+
+.input-row .input-row__content .input-row__input {
+  flex-grow: 1;
+}
+
+.input-row .input-row__content .input-row__input input,
+.input-row .input-row__content .input-row__input textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.input-row .input-row__content .input-row__errors {
+  padding-top: 5px;
+}
+
+.input-row .input-row__content .input-row__errors li {
+  list-style: none;
+  font-size: .8rem;
+  color: red;
+}

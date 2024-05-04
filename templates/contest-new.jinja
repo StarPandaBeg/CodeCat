@@ -1,0 +1,56 @@
+{% set tab='contests' %}
+
+{% extends 'base/two-column.jinja' %}
+{% from 'macro/wrapper.jinja' import wrap %}
+{% from 'macro/block.jinja' import block, block_title, block_row %}
+{% from 'macro/input.jinja' import input_row %}
+
+{% block title %}
+Новое соревнование
+{% endblock %}
+
+{% block column_a %}
+<div class="contest-new">
+  {% call wrap("Новое соревнование") %}
+  <form id="form" method="post">
+    {{ input_row(form.name, 'Название соревнования') }}
+    {{ input_row(form.date, 'Дата проведения') }}
+    {{ input_row(form.link, 'Ссылка') }}
+    {{ input_row(form.description, 'Описание') }}
+  </form>
+  {% endcall %}
+</div>
+{% endblock %}
+
+{% block column_b %}
+{% call block() %}
+
+{{ block_title("Действия") }}
+{% call block_row() %}
+<span class="actions">
+  <p><button type="submit" form="form">Сохранить</button></p>
+  <p><a href="/contests">Отмена</a></p>
+</span>
+{% endcall %}
+
+{% endcall %}
+{% endblock %}
+
+{% block style %}
+{{ super() }}
+<style>
+  .actions a {
+    color: darkblue;
+  }
+
+  .actions button {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: darkblue;
+    font-size: 1rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+</style>
+{% endblock %}
