@@ -1,0 +1,70 @@
+{% set tab='contests' %}
+
+{% extends 'base/two-column.jinja' %}
+{% from 'macro/wrapper.jinja' import wrap %}
+{% from 'macro/block.jinja' import block, block_title, block_row %}
+{% from 'macro/block-search.jinja' import block_search %}
+
+{% block title %}
+Соревнования
+{% endblock %}
+
+{% block column_a %}
+<div class="contest">
+  {% call wrap("Список соревнований") %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Название</th>
+        <th>Дата</th>
+        <th>Задач</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Тренировочный полигон (алгоритмика)</td>
+        <td>03.04.2024</td>
+        <td>3/10</td>
+        <td align="right">
+          <a href="#">Подробнее</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Тренировочный полигон (алгоритмика)</td>
+        <td>03.04.2024</td>
+        <td>3/10</td>
+        <td align="right">
+          <a href="#">Подробнее</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  {%endcall%}
+</div>
+{% endblock %}
+
+{% block column_b %}
+
+{% call block() %}
+<span class="block-search">
+  {{ block_title("Поиск") }}
+
+  {{ block_search("/contests/search") }}
+</span>
+{% endcall %}
+
+{% endblock %}
+
+{% block style %}
+{{ super() }}
+<style>
+  .contest {
+    width: 100%;
+  }
+
+  .contest .contest__header {
+    font-size: 1.2rem;
+  }
+</style>
+{% endblock %}
