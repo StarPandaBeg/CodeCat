@@ -5,146 +5,98 @@
 {% from 'macro/spoiler.jinja' import spoiler %}
 {% from 'macro/copyable.jinja' import copyable %}
 
+{% block title %}
+Задача {{ problem.letter }} - {{ problem.contest.name }}
+{% endblock %}
+
 {% block column_a %}
 <div class="problem-view">
   <div class="problem-view__title">
-    <h1>А. Монокарп и множество</h1>
-    <p>ограничение по времени на тест: 2 секунды</p>
-    <p>ограничение по памяти на тест: 256 мегабайт</p>
+    <h1>{{ problem.letter }}. {{ problem.name }}</h1>
+    <p>ограничение по времени на тест: {{ problem.time_limit }}</p>
+    <p>ограничение по памяти на тест: {{ problem.memory_limit }}</p>
   </div>
-  {% call spoiler("Текст задачи") %}
+  {% call spoiler("Текст задачи", True) %}
   <span class="problem-view__problem">
-    <p>
-      У Монокарпа есть $$$n$$$ чисел $$$1,2,…,n$$$ и множество (изначально пустое). Он $$$n$$$ раз добавляет свои числа
-      в это
-      множество в
-      некотором порядке. Во время каждого шага он добавляет новое число (которого ранее не было в множестве). Другими
-      словами, последовательность добавленных чисел является перестановкой длины $$$n$$$.
-    </p>
-    <br />
-    <p>
-      Каждый раз, когда Монокарп добавляет элемент в множество, кроме первого раза, он записывает символ:
-    <ul>
-      <li>если элемент, который Монокарп пытается добавить, становится максимальным элементом в множестве, Монокарп
-        записывает
-        символ >;
-      </li>
-      <li>если элемент, который Монокарп пытается добавить, становится минимальным элементом в множестве, Монокарп
-        записывает
-        символ <; </li>
-      <li>если ни одно из вышеперечисленного не выполняется, Монокарп записывает символ ?.</li>
-    </ul>
-    </p>
-    <br />
-    <p>
-      Дана строка $$$s$$$ из $$$n-1$$$ символов, которая представляет записанные символы Монокарпом (в порядке их
-      записи).
-      Вам
-      нужно
-      обработать $$$m$$$ запросов к строке. Каждый запрос имеет следующий формат:
-
-    <ul>
-      <li>
-        $$$i$$$ $$$c$$$ — заменить $$$s_i$$$ символом $$$c$$$.
-      </li>
-    </ul>
-    </p>
-    <br />
-    <p>
-      Перед всеми запросами и после каждого запроса вам нужно вычислить количество различных способов упорядочить числа
-      $$$1, 2, 3, \dots, n$$$ таким образом, что если Монокарп вставляет числа в множество в этом порядке, он получает
-      строку $$$s$$$. Поскольку ответы могут быть большими, выведите их по модулю $$$998244353$$$.
-    </p>
+    {{ problem.text }}
   </span>
   {% endcall %}
   {% call spoiler("Данные") %}
   <div class="problem-view__data">
     <h2>Входные данные</h2>
-    <p>
-      Первая строка содержит два целых числа $$$n$$$ и $$$m$$$ ($$$2 \le n \le 3 \cdot 10^5$$$; $$$1 \le m \le 3 \cdot
-      10^5$$$).
-
-      Вторая строка содержит строку $$$s$$$, состоящую из ровно $$$n-1$$$ символов <,> и/или ?.
-
-        Затем следуют $$$m$$$ строк. Каждая из них представляет запрос. Каждая строка содержит целое число $$$i$$$ и
-        символ $$$c$$$ ($$$1 \le i \le n-1$$$; $$$c$$$ может быть <,>, или ?).
-    </p>
+    {{ problem.data_in }}
   </div>
   <div class="problem-view__data">
     <h2>Выходные данные</h2>
-    <p>
-      Перед всеми запросами и после каждого запроса выведите одно целое число — количество способов упорядочить числа
-      $$$1, 2, 3, \dots, n$$$ таким образом, чтобы, если Монокарп вставляет числа в множество в этом порядке, он
-      получает строку $$$s$$$. Поскольку ответы могут быть большими, выведите их по модулю $$$998244353$$$.
-    </p>
+    {{ problem.data_out }}
   </div>
   {% endcall %}
   {% call spoiler("Примеры") %}
-
+  {% for example in problem.examples %}
   <div class="example">
     <div class="example__block">
-      {% call copyable("Входные данные") %}123
-      123{% endcall %}
+      {% call copyable("Входные данные") %}{{- example.input|e -}}{% endcall %}
     </div>
     <div class="example__block">
-      {% call copyable("Выходные данные") %}123
-      123{% endcall %}
+      {% call copyable("Выходные данные") %}{{- example.output|e -}}{% endcall %}
     </div>
   </div>
-  <div class="example">
-    <div class="example__block">
-      {% call copyable("Входные данные") %}123
-      123{% endcall %}
-    </div>
-    <div class="example__block">
-      {% call copyable("Выходные данные") %}123
-      123{% endcall %}
-    </div>
-  </div>
-  <p class="example-description">123</p>
-
+  {% endfor %}
+  {% if problem.example_description %}
+  <p class="example-description">{{ problem.example_description }}</p>
+  {% endif %}
   {% endcall %}
   {% call spoiler("Решения") %}
-  <div class="solution tex2jax_ignore">
+  {% for solution in problem.solutions %}
+  <div class="solution">
     <div class="solution_block">
-      {% call copyable("cpp", True, "cpp") %}#include &lt;iostream&gt;
-      using namespace std;
-
-      int main() {
-      cout << "Hello World!" ; return 0; } {% endcall %} <div class="solution__description">
-        123</div>
+      {% call copyable(solution.lang, True, solution.lang) %}{{- solution.code|e -}}{% endcall %}
+    </div>
+    {% if solution.comment %}
+    <p class="solution_description">{{ solution.comment }}</p>
+    {% endif %}
   </div>
-</div>
-<div class="solution tex2jax_ignore">
-  <div class="solution_block">
-    {% call copyable("cpp", True, "cpp") %}#include &lt;iostream&gt;
-    using namespace std;
-
-    int main() {
-    cout << "Hello World!" ; return 0; } {% endcall %} <div class="solution__description">
-      123</div>
-</div>
-</div>
-
-{% endcall %}
+  {% endfor %}
+  {% endcall %}
 </div>
 {% endblock %}
 
 {% block column_b %}
 {% call block() %}
-{{ block_title("Тренировочный полигон (алгоритмика)", "/contests/1") }}
+{{ block_title(problem.contest.name, url_for('contest.view', id=problem.contest.id)) }}
+
+{% if problem.contest.description %}
 {% call block_row() %}
-<p><b>Статус:</b> <span class="status">не начато</span></p>
+{{ problem.contest.description }}
 {% endcall %}
+{% endif %}
+
 {% call block_row() %}
-<p>{{chip("Комбинаторика")}}</p>
+<p>
+  <b>Статус:</b>
+  <span class="status {{ problem.css_class }}">{{ problem.status_friendly }}</span>
+</p>
+{% if problem.solutions|length == 0 %}
+<p><b>Решений нет!</b></p>
+{% endif %}
 {% endcall %}
+
+{% call block_row() %}
+{% for tag in problem.tags %}
+{{ chip(tag.tag) }}
+{% endfor %}
+{% endcall %}
+
 {% endcall %}
 {% endblock %}
 
 {% block style %}
 {{ super() }}
 <style>
+  .problem-view {
+    min-height: 90vh;
+  }
+
   .problem-view .problem-view__title {
     padding-bottom: 10px;
     width: 100%;
@@ -201,6 +153,10 @@
 
   .problem-view .example-description {
     padding-top: 20px;
+  }
+
+  .problem-view .solution_description {
+    padding-top: 10px;
   }
 
   .status.solved {

@@ -47,6 +47,13 @@ class Problem(Base):
     tags: Mapped[List[ProblemTag]] = relationship(
         secondary=tag_association_table, back_populates="problems"
     )
+    examples: Mapped[List[ProblemExample]] = relationship(
+        back_populates="problem"
+    )
+    example_description: Mapped[str] = mapped_column(Text())
+    solutions: Mapped[List[ProblemSolution]] = relationship(
+        back_populates="problem"
+    )
 
     @property
     def css_class(self):
@@ -98,3 +105,28 @@ class ProblemTag(Base):
     problems: Mapped[List[Problem]] = relationship(
         secondary=tag_association_table, back_populates="tags"
     )
+
+
+class ProblemExample(Base):
+    __tablename__ = 'problem_examples'
+
+    id: Mapped[int] = mapped_column(
+        Integer(), primary_key=True, autoincrement=True)
+    problem_id: Mapped[int] = mapped_column(ForeignKey("problems.id"))
+    input:  Mapped[str] = mapped_column(Text(), nullable=False)
+    output:  Mapped[str] = mapped_column(Text(), nullable=False)
+
+    problem: Mapped[Problem] = relationship(back_populates="examples")
+
+
+class ProblemSolution(Base):
+    __tablename__ = 'problem_solutions'
+
+    id: Mapped[int] = mapped_column(
+        Integer(), primary_key=True, autoincrement=True)
+    problem_id: Mapped[int] = mapped_column(ForeignKey("problems.id"))
+    code: Mapped[str] = mapped_column(Text(), nullable=False)
+    lang: Mapped[str] = mapped_column(String(16), nullable=False)
+    comment: Mapped[str] = mapped_column(Text())
+
+    problem: Mapped[Problem] = relationship(back_populates="solutions")
