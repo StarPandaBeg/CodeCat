@@ -1,11 +1,13 @@
 from flask import Blueprint, render_template
+from models.contest import Contest
 
 bp = Blueprint("contest", __name__, url_prefix="/contests")
 
 
 @bp.route("/")
 def index():
-    return render_template("contest-list.jinja")
+    contests = Contest.query.all()
+    return render_template("contest-list.jinja", contests=contests)
 
 
 @bp.route("/<id>")

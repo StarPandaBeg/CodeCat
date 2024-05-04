@@ -22,22 +22,20 @@
       </tr>
     </thead>
     <tbody>
+      {% for contest in contests %}
       <tr>
-        <td>Тренировочный полигон (алгоритмика)</td>
-        <td>03.04.2024</td>
-        <td>3/10</td>
+        <td>{{ contest.name }}</td>
+        <td>{{ contest.date.strftime('%d.%m.%Y') }}</td>
+        <td>
+          {{ contest.problems|map(attribute="status")|selectattr("name", "eq", "solved")|list|length -}}
+          /
+          {{- contest.problems|length }}
+        </td>
         <td align="right">
-          <a href="#">Подробнее</a>
+          <a href="/contests/{{ contest.id }}">Подробнее</a>
         </td>
       </tr>
-      <tr>
-        <td>Тренировочный полигон (алгоритмика)</td>
-        <td>03.04.2024</td>
-        <td>3/10</td>
-        <td align="right">
-          <a href="#">Подробнее</a>
-        </td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
   {%endcall%}
@@ -47,11 +45,8 @@
 {% block column_b %}
 
 {% call block() %}
-<span class="block-search">
-  {{ block_title("Поиск") }}
-
-  {{ block_search("/contests/search") }}
-</span>
+{{ block_title("Поиск") }}
+{{ block_search("/contests/search") }}
 {% endcall %}
 
 {% endblock %}
