@@ -69,3 +69,25 @@
   background: #f0f0f0;
   border-radius: 5px;
 }
+
+.spoiler .spoiler__title {
+  cursor: pointer;
+  user-select: none;
+}
+
+.spoiler .spoiler__title .icon::before {
+  content: "\F035F";
+}
+
+.spoiler .spoiler__content {
+  padding-top: 5px;
+  display: none;
+}
+
+.spoiler.spoiler-opened .spoiler__title .icon::before {
+  content: "\F035D";
+}
+
+.spoiler.spoiler-opened .spoiler__content {
+  display: block;
+}
