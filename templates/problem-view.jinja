@@ -18,17 +18,17 @@
   </div>
   {% call spoiler("Текст задачи", True) %}
   <span class="problem-view__problem">
-    {{ problem.text }}
+    {{ problem.text | e | paragraphy }}
   </span>
   {% endcall %}
   {% call spoiler("Данные") %}
   <div class="problem-view__data">
     <h2>Входные данные</h2>
-    {{ problem.data_in }}
+    {{ problem.data_in | e | paragraphy }}
   </div>
   <div class="problem-view__data">
     <h2>Выходные данные</h2>
-    {{ problem.data_out }}
+    {{ problem.data_out | e | paragraphy }}
   </div>
   {% endcall %}
   {% call spoiler("Примеры") %}
