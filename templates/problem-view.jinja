@@ -74,7 +74,7 @@
 {% call block_row() %}
 <p>
   <b>Статус:</b>
-  <span class="status {{ problem.css_class }}">{{ problem.status_friendly }}</span>
+  <span class="status {{ problem.css_class }}">{{ problem.status.value }}</span>
 </p>
 {% if problem.solutions|length == 0 %}
 <p><b>Решений нет!</b></p>

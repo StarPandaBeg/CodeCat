@@ -20,11 +20,11 @@ tag_association_table = Table(
 
 
 class ProblemStatus(enum.Enum):
-    none = 0
-    solved = 1
-    wrong = 2
-    time_exceed = 3
-    memory_exceed = 4
+    none = 'не начато'
+    solved = 'решено'
+    wrong = 'неверное решение'
+    time_exceed = 'превышен лимит времени'
+    memory_exceed = 'превышен лимит объема памяти'
 
 
 class Problem(Base):
@@ -64,22 +64,6 @@ class Problem(Base):
                 return "failed"
             case _:
                 return None
-
-    @property
-    def status_friendly(self):
-        match self.status.value:
-            case ProblemStatus.solved.value:
-                return "решено"
-            case ProblemStatus.time_exceed.value:
-                return "Превышен лимит времени"
-            case ProblemStatus.memory_exceed.value:
-                return "Превышен лимит объема памяти"
-            case ProblemStatus.wrong.value:
-                return "Неверное решение"
-            case ProblemStatus.none.value:
-                return "Не начато"
-            case _:
-                return 'Неизвестно'
 
     @property
     def status_icon(self):
