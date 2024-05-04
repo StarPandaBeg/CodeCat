@@ -21,6 +21,12 @@ body {
   flex-direction: column;
 }
 
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 10px 20px;
+  }
+}
+
 .table {
   width: 100%;
   border-spacing: 0;
