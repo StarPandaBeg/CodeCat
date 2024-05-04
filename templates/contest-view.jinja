@@ -1,0 +1,122 @@
+{% extends 'base/two-column.jinja' %}
+{% from 'macro/chip.jinja' import chip %}
+{% from 'macro/wrapper.jinja' import wrap %}
+{% from 'macro/block.jinja' import block, block_title, block_row %}
+
+{% block column_a %}
+<div class="contest-view">
+  {% call wrap("Задачи") %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th width="32px">#</th>
+        <th>Задача</th>
+        <th>Тэги</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="failed">
+        <td>
+          <a href="#">A</a>
+        </td>
+        <td>
+          <a href="#">Монокарп и множество</a>
+        </td>
+        <td width="30%">
+          {{ chip("Комбинаторика") }}
+        </td>
+        <td align="right">
+          <span class="icon mdi mdi-clock-alert-outline mdi-24px" title="Выход за время"></span>
+        </td>
+      </tr>
+      <tr class="failed">
+        <td>
+          <a href="#">B</a>
+        </td>
+        <td>
+          <a href="#">Монокарп и множество</a>
+        </td>
+        <td width="30%">
+          {{ chip("Комбинаторика") }}
+        </td>
+        <td align="right">
+          <span class="icon mdi mdi-alert-circle-outline mdi-24px" title="Неверный алгоритм"></span>
+        </td>
+      </tr>
+      <tr class="solved">
+        <td>
+          <a href="#">C</a>
+        </td>
+        <td>
+          <a href="#">Монокарп и множество</a>
+        </td>
+        <td width="30%">
+          {{ chip("Комбинаторика") }}
+        </td>
+        <td align="right">
+          <span class="icon mdi mdi-check-circle-outline mdi-24px" title="Решено"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="#">D</a>
+        </td>
+        <td>
+          <a href="#">Монокарп и множество</a>
+        </td>
+        <td width="30%">
+          {{ chip("Комбинаторика") }}
+        </td>
+        <td align="right">
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  {% endcall %}
+</div>
+{% endblock %}
+
+{% block column_b %}
+{% call block() %}
+{{ block_title("Тренировочный полигон (алгоритмика)") }}
+
+{% call block_row() %}
+Краткое описание
+{% endcall %}
+
+{% call block_row() %}
+<p><b>Завершен:</b> 01.01.1970</p>
+<p title="Решено / Ошибка / Не начато"><b>Статистика:</b> 1/2/1</p>
+<p><b>Всего:</b> 1/4</p>
+{% endcall %}
+
+{% endcall %}
+{% endblock %}
+
+{% block style %}
+{{ super() }}
+<style>
+  .contest-view table tr th,
+  .contest-view table tr td {
+    padding: 10px;
+  }
+
+  .contest-view table tbody tr.solved {
+    background: rgb(230, 255, 230);
+  }
+
+  .contest-view table tbody tr.failed {
+    background: rgb(255, 230, 230);
+  }
+
+  .contest-view table tbody tr.solved .icon {
+    color: rgb(100, 205, 100);
+  }
+
+  .contest-view table tbody tr.failed .icon {
+    color: rgb(255, 50, 50);
+  }
+</style>
+{% endblock %}

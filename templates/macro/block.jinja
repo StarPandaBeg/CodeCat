@@ -1,5 +1,5 @@
-{% macro block() -%}
-<div class="block">
+{% macro block(align="center") -%}
+<div class="block" style="text-align: {{ align }};">
   {{caller()}}
 </div>
 {%- endmacro %}

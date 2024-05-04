@@ -60,3 +60,12 @@
 .block-search .input-row .button-search span::before {
   vertical-align: middle;
 }
+
+.chip {
+  margin: 2px;
+  padding: 5px;
+  display: inline-block;
+  font-size: .8rem;
+  background: #f0f0f0;
+  border-radius: 5px;
+}
