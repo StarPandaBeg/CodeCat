@@ -56,7 +56,37 @@ class Problem(Base):
             case ProblemStatus.time_exceed.value | ProblemStatus.memory_exceed.value | ProblemStatus.wrong.value:
                 return "failed"
             case _:
-                return ''
+                return None
+
+    @property
+    def status_friendly(self):
+        match self.status.value:
+            case ProblemStatus.solved.value:
+                return "решено"
+            case ProblemStatus.time_exceed.value:
+                return "Превышен лимит времени"
+            case ProblemStatus.memory_exceed.value:
+                return "Превышен лимит объема памяти"
+            case ProblemStatus.wrong.value:
+                return "Неверное решение"
+            case ProblemStatus.none.value:
+                return "Не начато"
+            case _:
+                return 'Неизвестно'
+
+    @property
+    def status_icon(self):
+        match self.status.value:
+            case ProblemStatus.solved.value:
+                return "mdi-check-circle-outline"
+            case ProblemStatus.time_exceed.value:
+                return "mdi-clock-alert-outline"
+            case ProblemStatus.memory_exceed.value:
+                return "mdi-memory"
+            case ProblemStatus.wrong.value:
+                return "mdi-alert-circle-outline"
+            case _:
+                return None
 
 
 class ProblemTag(Base):

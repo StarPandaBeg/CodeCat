@@ -34,14 +34,8 @@
           {% endfor %}
         </td>
         <td align="right">
-          {% if problem.status.name == "solved" %}
-          <span class="icon mdi mdi-check-circle-outline mdi-24px" title="Решено"></span>
-          {% elif problem.status.name == "time_exceed" %}
-          <span class="icon mdi mdi-clock-alert-outline mdi-24px" title="Выход за время"></span>
-          {% elif problem.status.name == "memory_exceed" %}
-          <span class="icon mdi mdi-memory mdi-24px" title="Выход за объём памяти"></span>
-          {% elif problem.status.name == "wrong" %}
-          <span class="icon mdi mdi-alert-circle-outline mdi-24px" title="Неверный алгоритм"></span>
+          {% if problem.status_icon %}
+          <span class="icon mdi mdi-24px {{ problem.status_icon }}" title="{{ problem.status_friendly }}"></span>
           {% endif %}
         </td>
       </tr>
