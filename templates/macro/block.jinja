@@ -1,0 +1,17 @@
+{% macro block() -%}
+<div class="block">
+  {{caller()}}
+</div>
+{%- endmacro %}
+
+{% macro block_title(title) -%}
+<h1 class="block__row block__title">
+  {{title}}
+</h1>
+{%- endmacro %}
+
+{% macro block_row() -%}
+<div class="block__row">
+  {{ caller() }}
+</div>
+{%- endmacro %}
