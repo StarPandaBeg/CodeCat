@@ -37,6 +37,9 @@
           {% if problem.status_icon %}
           <span class="icon mdi mdi-24px {{ problem.status_icon }}" title="{{ problem.status_friendly }}"></span>
           {% endif %}
+          {% if problem.solutions|length == 0 %}
+          <span class="icon icon-no-code mdi mdi-24px mdi-xml" title="К задаче не добавлено решений"></span>
+          {% endif %}
         </td>
       </tr>
       {% endfor %}
@@ -98,8 +101,9 @@
     color: rgb(100, 205, 100);
   }
 
-  .contest-view table tbody tr.failed .icon {
-    color: rgb(255, 50, 50);
+  .contest-view table tbody tr.failed .icon,
+  .contest-view table tbody tr .icon-no-code {
+    color: rgb(255, 50, 50) !important;
   }
 </style>
 {% endblock %}
