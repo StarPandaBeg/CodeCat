@@ -54,3 +54,34 @@ body {
 .input {
   padding: 5px 10px;
 }
+
+.flashes {
+  width: 100%;
+}
+.flashes li {
+  margin-top: 10px;
+  padding: 5px 10px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.flashes li a {
+  color: black;
+  text-decoration: none;
+}
+.flashes li.flashes__message {
+  background: #ccc;
+}
+.flashes li.flashes__error {
+  background: #f49898;
+}
+.flashes li.flashes__warning {
+  background: #f4f498;
+}
+.flashes li.flashes__info {
+  background: #98e0f4;
+}
+.flashes li.flashes__success {
+  background: #a7f498;
+}
