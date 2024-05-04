@@ -4,10 +4,16 @@
 </div>
 {%- endmacro %}
 
-{% macro block_title(title) -%}
+{% macro block_title(title, link='') -%}
+{% if link %}
+<a href="{{link}}" class="block__row block__title">
+  {{title}}
+</a>
+{% else %}
 <h1 class="block__row block__title">
   {{title}}
 </h1>
+{% endif %}
 {%- endmacro %}
 
 {% macro block_row() -%}
