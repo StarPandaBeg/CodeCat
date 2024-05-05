@@ -1,8 +1,10 @@
 from flask import Blueprint, Flask
 from .contest import bp as contest_bp
+from .problem import bp as problem_bp
 
 _blueprints: list[Blueprint] = [
-    contest_bp
+    contest_bp,
+    problem_bp
 ]
 
 
