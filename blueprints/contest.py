@@ -1,9 +1,9 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from core.models.problem import Problem, ProblemExample, ProblemSolution, ProblemTag
 from core.models.contest import Contest
-from validation.contest_new import ContestNewForm
+from core.validation import ContestNewForm
+from core.validation import ProblemNewForm
 from database import db_session
-from validation.problem_new import ProblemNewForm
 
 bp = Blueprint("contest", __name__, url_prefix="/contests")
 

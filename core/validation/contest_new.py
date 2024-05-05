@@ -1,5 +1,5 @@
 from wtforms import StringField, DateField, TextAreaField, URLField, ValidationError, validators
-from validation.base import FormBase
+from .base import FormBase
 from datetime import date
 
 

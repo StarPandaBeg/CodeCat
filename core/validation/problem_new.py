@@ -1,6 +1,6 @@
 from wtforms import FieldList, FormField, SelectField, StringField, TextAreaField, ValidationError, validators
 from core.util.status import get_problemstatus_items
-from validation.base import FormBase
+from .base import FormBase
 
 
 class ProblemExampleNewForm(FormBase):
