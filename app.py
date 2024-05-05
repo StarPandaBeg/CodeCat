@@ -1,8 +1,7 @@
 from flask import Flask
 from database import db_session, init_db
-import blueprints.contest as bp_contest
-import blueprints.problem as bp_problem
 from filters import init_jinja_filters
+from core.routes import register_routes
 
 
 def create_app():
@@ -10,7 +9,7 @@ def create_app():
     app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
     app.config['SERVER_NAME'] = "localhost:5000"
     app.register_blueprint(bp_contest.bp)
-    app.register_blueprint(bp_problem.bp)
+    register_routes(app)
 
     return app
 
