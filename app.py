@@ -8,7 +8,7 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
     app.config['SERVER_NAME'] = "localhost:5000"
-    app.register_blueprint(bp_contest.bp)
+    app.template_folder = 'core/views'
     register_routes(app)
 
     return app

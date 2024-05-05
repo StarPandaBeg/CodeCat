@@ -1,5 +1,6 @@
 from flask import Blueprint
+import core.controllers.contest as contest
 
 bp = Blueprint('contest', __name__, url_prefix='/contests')
 
-bp.route('/')(lambda: "Hello!")
+bp.route('/')(contest.index)

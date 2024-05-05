@@ -1,0 +1,31 @@
+{% extends 'base/base.jinja' %}
+
+{% block content %}
+<div class="content">
+  <div class="column">
+    {%block column_a %}{% endblock %}
+  </div>
+  <div class="column">
+    {%block column_b %}{% endblock %}
+  </div>
+</div>
+{% endblock %}
+
+{% block style %}
+{{ super() }}
+<style>
+  .content {
+    padding-top: 20px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3fr minmax(200px, 1fr);
+    gap: 20px;
+  }
+
+  @media screen and (max-width: 960px) {
+    .content {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %}
