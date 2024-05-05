@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from models.problem import Problem, ProblemExample, ProblemSolution, ProblemTag
-from models.contest import Contest
+from core.models.problem import Problem, ProblemExample, ProblemSolution, ProblemTag
+from core.models.contest import Contest
 from validation.contest_new import ContestNewForm
 from database import db_session
 from validation.problem_new import ProblemNewForm

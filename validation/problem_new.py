@@ -1,5 +1,5 @@
 from wtforms import FieldList, FormField, SelectField, StringField, TextAreaField, ValidationError, validators
-from models.problem import ProblemStatus
+from core.models.problem import ProblemStatus
 from validation.base import FormBase
 
 

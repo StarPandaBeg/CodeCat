@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from models.problem import Problem
+from core.models.problem import Problem
 
 bp = Blueprint("problem", __name__, url_prefix="/problems")
 
