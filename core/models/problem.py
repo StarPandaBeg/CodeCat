@@ -1,15 +1,13 @@
 from __future__ import annotations
 
-import enum
-from database import Base
 from sqlalchemy import Enum, ForeignKey, Integer, String, Text, Table, Column
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from typing import List
+from typing import List, TYPE_CHECKING
+from core.util.status import ProblemStatus
+from database import Base
 
-import typing
-
-if typing.TYPE_CHECKING:
-    from models.contest import Contest
+if TYPE_CHECKING:
+    from core.models.contest import Contest
 
 tag_association_table = Table(
     "problem_tags",
@@ -17,14 +15,6 @@ tag_association_table = Table(
     Column("problem_id", ForeignKey("problems.id"), primary_key=True),
     Column("tag_id", ForeignKey("tags.id"), primary_key=True),
 )
-
-
-class ProblemStatus(enum.Enum):
-    none = 'не начато'
-    solved = 'решено'
-    wrong = 'неверное решение'
-    time_exceed = 'превышен лимит времени'
-    memory_exceed = 'превышен лимит объема памяти'
 
 
 class Problem(Base):

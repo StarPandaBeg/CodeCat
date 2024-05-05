@@ -1,10 +1,6 @@
 from wtforms import FieldList, FormField, SelectField, StringField, TextAreaField, ValidationError, validators
-from core.models.problem import ProblemStatus
+from core.util.status import get_problemstatus_items
 from validation.base import FormBase
-
-
-def get_problem_statuses():
-    return [(st.name, st.value) for st in ProblemStatus]
 
 
 class ProblemExampleNewForm(FormBase):
@@ -28,7 +24,7 @@ class ProblemNewForm(FormBase):
     memory_limit = StringField(
         'memory_limit', [validators.Length(min=4, max=16)])
     status = SelectField(
-        'status', choices=get_problem_statuses(), default='none')
+        'status', choices=get_problemstatus_items(), default='none')
     text = TextAreaField('text')
     data_in = TextAreaField('data_in')
     data_out = TextAreaField('data_out')
