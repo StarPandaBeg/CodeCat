@@ -1,0 +1,117 @@
+{% extends "layouts/two-column.jinja" %}
+
+{% from 'macros/block-base.jinja' import block, block_row, block_title %}
+{% from 'macros/chip.jinja' import chip %}
+{% from 'macros/wrapper.jinja' import wrap %}
+
+{% block title %} {{ contest.name }} {% endblock %}
+
+{% block column_a %}
+{% call wrap('Задачи') %}
+<table class="table contest-table">
+  <thead>
+    <tr>
+      <th width="32px">#</th>
+      <th>Задача</th>
+      <th>Тэги</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for problem in contest.problems %}
+    <tr class="{{ problem.css_class }}">
+      <td>
+        <a href="#">{{ problem.letter }}</a>
+      </td>
+      <td>
+        <a href="#">{{ problem.name }}</a>
+      </td>
+      <td>
+        {% for tag in problem.tags %}
+        {{ chip(tag.tag) }}
+        {% endfor %}
+      </td>
+      <td align="right">
+        {% if problem.status_icon %}
+        <span class="icon mdi mdi-24px {{ problem.status_icon }}" title="{{ problem.status_friendly }}"></span>
+        {% endif %}
+        {% if problem.solutions|length == 0 %}
+        <span class="icon icon-no-code mdi mdi-24px mdi-xml" title="К задаче не добавлено решений"></span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endcall %}
+<div class="problem-new">
+  <a href="#">Добавить</a>
+</div>
+{% endblock %}
+
+
+{% block column_b %}
+{% call block() %}
+
+{{ block_title(contest.name, contest.link) }}
+
+{% if contest.description %}
+{% call block_row() %}
+{{ contest.description }}
+{% endcall %}
+{% endif %}
+
+{% call block_row() %}
+<p><b>Завершен:</b> {{ contest.date.strftime('%d.%m.%Y') }}</p>
+<p title="Решено / Ошибка / Не начато">
+  <b>Статистика:</b>
+  {{ contest.problem_stats|join("/") }}
+</p>
+<p>
+  <b>Всего:</b>
+  {{ contest.problem_stats[0] -}}
+  /
+  {{- contest.problems|length }}
+</p>
+{% endcall %}
+
+{% endcall %}
+{% endblock %}
+
+{% block style %}
+{{ super() }}
+<style>
+  .contest-table tr th,
+  .contest-table tr td {
+    padding: 10px !important;
+  }
+
+  .contest-table tbody tr.solved {
+    background: rgb(230, 255, 230);
+  }
+
+  .contest-table tbody tr.failed {
+    background: rgb(255, 230, 230);
+  }
+
+  .contest-table tbody tr.solved .icon {
+    color: rgb(100, 205, 100);
+  }
+
+  .contest-table tbody tr.failed .icon,
+  .contest-table tbody tr .icon-no-code {
+    color: rgb(255, 50, 50) !important;
+  }
+
+  .problem-new {
+    padding-top: 5px;
+    text-align: right;
+    font-size: .8rem;
+  }
+
+  .problem-new a {
+    color: darkblue;
+    opacity: .75;
+  }
+</style>
+{% endblock %}

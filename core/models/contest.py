@@ -1,4 +1,5 @@
 from typing import List
+from core.util.status import test_failed, test_solved, test_untouched
 from database import Base
 from sqlalchemy import Integer, String, Date, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -20,3 +21,11 @@ class Contest(Base):
     link: Mapped[str] = mapped_column(String(64))
 
     problems: Mapped[List["Problem"]] = relationship(back_populates="contest")
+
+    @property
+    def problem_stats(self):
+        return [
+            sum(1 for problem in self.problems if test_solved(problem.status)),
+            sum(1 for problem in self.problems if test_failed(problem.status)),
+            sum(1 for problem in self.problems if test_untouched(problem.status)),
+        ]
