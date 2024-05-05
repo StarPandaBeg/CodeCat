@@ -46,6 +46,9 @@
     </tbody>
   </table>
   {% endcall %}
+  <div class="contest-view__new">
+    <a href="{{ url_for('contest.create_problem_get', id=contest.id) }}">Добавить</a>
+  </div>
 </div>
 {% endblock %}
 
@@ -104,6 +107,17 @@
   .contest-view table tbody tr.failed .icon,
   .contest-view table tbody tr .icon-no-code {
     color: rgb(255, 50, 50) !important;
+  }
+
+  .contest-view .contest-view__new {
+    padding-top: 5px;
+    text-align: right;
+    font-size: .8rem;
+  }
+
+  .contest-view .contest-view__new a {
+    color: darkblue;
+    opacity: .75;
   }
 </style>
 {% endblock %}
