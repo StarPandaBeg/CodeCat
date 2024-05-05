@@ -1,0 +1,43 @@
+{% from '/util/random.jinja' import random_string %}
+
+{% macro input_row(field, label) %}
+<div class="input-row">
+  <div class="input-row__content">
+    <label for="{{field.name}}">{{label}}</label>
+    <div class="input-row__input">
+      {{ field(class_='input') }}
+      {% if field.errors %}
+      <ul class="input-row__errors">
+        {% for error in field.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro input_tag(tags, label) %}
+{% set id = kwargs['id'] if kwargs[id] else "tag-"+random_string(8) %}
+
+<div class="input-row input-tag" id="{{id}}">
+  <div class="input-row__content">
+    <label for="{{kwargs['name']}}">{{label}}</label>
+    <div class="input-row__input">
+      <div class="autocomplete" style="width: 100%;">
+        <input type="text" class="input" name="{{kwargs['name']}}" style="width: 95%;" />
+        <button type="button" onclick="autocompleteTagsAdd('{{id}}')">+</button>
+      </div>
+      <ul class="input-tag__tags"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const input = document.querySelector(".input-tag#{{id}} .input")
+    autocomplete(input, {{ tags| safe }});
+  })
+</script>
+{% endmacro %}

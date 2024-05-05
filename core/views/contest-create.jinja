@@ -1,0 +1,22 @@
+{% extends 'layouts/two-column.jinja' %}
+
+{% from 'macros/wrapper.jinja' import wrap %}
+{% from 'macros/block-util.jinja' import block_actions %}
+{% from 'macros/input.jinja' import input_row %}
+
+{% block title %} Новое соревнование {% endblock %}
+
+{% block column_a %}
+{% call wrap("Новое соревнование") %}
+<form id="form" method="post">
+  {{ input_row(form.name, 'Название соревнования') }}
+  {{ input_row(form.date, 'Дата проведения') }}
+  {{ input_row(form.link, 'Ссылка') }}
+  {{ input_row(form.description, 'Описание') }}
+</form>
+{% endcall %}
+{% endblock %}
+
+{% block column_b %}
+{{ block_actions(url_for('contest.index')) }}
+{% endblock %}
