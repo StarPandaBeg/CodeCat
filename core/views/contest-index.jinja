@@ -23,12 +23,12 @@
       <td>{{ contest.name }}</td>
       <td>{{ contest.date.strftime('%d.%m.%Y') }}</td>
       <td>
-        {{ contest.problems|map(attribute="status")|selectattr("name", "eq", "solved")|list|length -}}
+        {{ contest.problem_stats[0] -}}
         /
         {{- contest.problems|length }}
       </td>
       <td align="right">
-        <a href="#">Подробнее</a>
+        <a href="{{ url_for('contest.view', id=contest.id) }}">Подробнее</a>
       </td>
     </tr>
     {% endfor %}
@@ -36,7 +36,7 @@
 </table>
 {% endcall %}
 <div class="contest-new">
-  <a href="#">Добавить</a>
+  <a href="{{ url_for('contest.create') }}">Добавить</a>
 </div>
 {% endblock %}
 
