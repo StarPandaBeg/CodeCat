@@ -4,10 +4,12 @@
 {% from 'macros/block-util.jinja' import block_actions %}
 {% from 'macros/input.jinja' import input_row %}
 
-{% block title %} Новое соревнование {% endblock %}
+{% set action = 'Редактирование соревнования' if mode_edit else 'Новое соревнование' %}
+
+{% block title %} {{ action }} {% endblock %}
 
 {% block column_a %}
-{% call wrap("Новое соревнование") %}
+{% call wrap(action) %}
 <form id="form" method="post">
   {{ input_row(form.name, 'Название соревнования') }}
   {{ input_row(form.date, 'Дата проведения') }}
@@ -18,5 +20,7 @@
 {% endblock %}
 
 {% block column_b %}
-{{ block_actions(url_for('contest.index')) }}
+{% set cancel_url = url_for('contest.view', id=contest.id) if mode_edit else url_for('contest.index') %}
+
+{{ block_actions(cancel_url) }}
 {% endblock %}

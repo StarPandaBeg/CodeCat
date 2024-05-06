@@ -17,6 +17,11 @@ def create(form: ContestNewForm):
     return contest
 
 
+def edit(contest: Contest, form: ContestNewForm):
+    form.populate_obj(contest)
+    db_session.commit()
+
+
 def delete(id: int, form: ContestDeleteForm):
     if form.delete_problems.data:
         Problem.query.filter(Problem.contest_id == id).delete()

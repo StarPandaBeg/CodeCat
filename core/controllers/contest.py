@@ -22,16 +22,32 @@ def view(id):
 
 def create():
     form = ContestNewForm()
-    return render_template("contest-create.jinja", form=form)
+    return render_template("contest-form.jinja", form=form)
 
 
 def store():
     form = ContestNewForm(request.form)
     if not form.validate():
-        return render_template("contest-create.jinja", form=form)
+        return render_template("contest-form.jinja", form=form)
     contest = contest_service.create(form)
     flash('Соревнование создано!', 'success')
     return redirect(url_for('contest.view', id=contest.id))
+
+
+def edit(id, form=None):
+    contest = get_or_404(Contest.query, id)
+    if not form:
+        form = ContestNewForm(obj=contest)
+    return render_template("contest-form.jinja", form=form, contest=contest, mode_edit=True)
+
+
+def update(id):
+    contest = get_or_404(Contest.query, id)
+    form = ContestNewForm(request.form)
+    if not form.validate():
+        return edit(id, form)
+    contest_service.edit(contest, form)
+    return redirect(url_for('contest.view', id=id))
 
 
 def delete(id):
