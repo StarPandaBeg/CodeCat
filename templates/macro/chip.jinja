@@ -1,8 +1,0 @@
-{% macro chip(text, closable = False, onclose = None) -%}
-<div class="chip">
-  {{text}}
-  {% if closable %}
-  <a href="#" onclick="{{onclose}}">&#10006;</a>
-  {% endif %}
-</div>
-{%- endmacro %}
