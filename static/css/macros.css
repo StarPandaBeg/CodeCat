@@ -170,6 +170,13 @@
   color: black;
   text-decoration: none;
 }
+.input-tag .input-row__content .autocomplete input {
+  width: calc(100% - 36px);
+}
+.input-tag .input-row__content .autocomplete button {
+  width: 32px;
+  height: 30px;
+}
 
 .block .actions a {
   color: darkblue;
