@@ -4,12 +4,13 @@
 {% from "macros/chip.jinja" import chip %}
 {% from "macros/wrapper.jinja" import spoiler, copyable %}
 
-{% block title %} Задача {{ problem.letter }} - {{ problem.contest.name }} {% endblock %}
+{% set letter = problem.letter + "." if problem.letter else "" %}
+{% block title %} {{ problem.name }} - {{ problem.contest.name }} {% endblock %}
 
 {% block column_a %}
 <div class="problem-view">
   <div class="problem-view__title">
-    <h1>{{ problem.letter }}. {{ problem.name }}</h1>
+    <h1>{{ letter }} {{ problem.name }}</h1>
     <p>ограничение по времени на тест: {{ problem.time_limit }}</p>
     <p>ограничение по памяти на тест: {{ problem.memory_limit }}</p>
   </div>

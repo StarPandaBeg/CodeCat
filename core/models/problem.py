@@ -26,7 +26,7 @@ class Problem(Base):
         sa.Integer(), primary_key=True, autoincrement=True)
     contest_id: Mapped[int] = mapped_column(sa.ForeignKey(
         "contests.id", ondelete='SET NULL'), nullable=True)
-    letter: Mapped[str] = mapped_column(sa.String(4), nullable=False)
+    letter: Mapped[str] = mapped_column(sa.String(4), nullable=True)
     name: Mapped[str] = mapped_column(sa.String(64), nullable=False)
     time_limit: Mapped[str] = mapped_column(sa.String(16))
     memory_limit: Mapped[str] = mapped_column(sa.String(16))

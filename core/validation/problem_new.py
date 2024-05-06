@@ -18,6 +18,7 @@ class ProblemSolutionNewForm(FormBase):
 class ProblemNewForm(FormBase):
     name = StringField('name', [validators.Length(min=4, max=64)])
     letter = StringField('letter', validators=[
+        validators.Optional(),
         validators.Length(min=1, max=4),
         validators.Regexp(r'^[a-zA-Z]{1,4}$')
     ])
