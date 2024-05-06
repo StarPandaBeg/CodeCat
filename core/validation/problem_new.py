@@ -1,4 +1,5 @@
 from wtforms import FieldList, FormField, SelectField, StringField, TextAreaField, ValidationError, validators
+from core.models.problem import ProblemExample, ProblemSolution
 from core.util.status import get_problemstatus_items
 from .base import FormBase
 
@@ -30,8 +31,10 @@ class ProblemNewForm(FormBase):
     data_out = TextAreaField('data_out')
     example_description = TextAreaField('example_description')
 
-    examples = FieldList(FormField(ProblemExampleNewForm))
-    solutions = FieldList(FormField(ProblemSolutionNewForm))
+    examples = FieldList(FormField(ProblemExampleNewForm,
+                                   default=lambda: ProblemExample()))
+    solutions = FieldList(FormField(ProblemSolutionNewForm,
+                                    default=lambda: ProblemSolution()))
     tags = FieldList(StringField('tags'))
 
     def validate_examples(self, field):

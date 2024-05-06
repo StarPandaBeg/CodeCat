@@ -50,7 +50,7 @@ def create_problem(id):
     contest = get_or_404(Contest.query, id)
     tags = ProblemTag.query.all()
     form = ProblemNewForm()
-    return render_template("problem-create.jinja", form=form, contest=contest, tags=tags)
+    return render_template("problem-form.jinja", form=form, contest=contest, tags=tags)
 
 
 def store_problem(id):
@@ -58,6 +58,6 @@ def store_problem(id):
     form = ProblemNewForm(request.form)
     if not form.validate():
         tags = ProblemTag.query.all()
-        return render_template("problem-create.jinja", form=form, contest=contest, tags=tags)
+        return render_template("problem-form.jinja", form=form, contest=contest, tags=tags)
     problem_service.create(form, contest)
     return redirect(url_for('contest.view', id=contest.id))

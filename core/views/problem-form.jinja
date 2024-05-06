@@ -4,17 +4,19 @@
 {% from 'macros/input.jinja' import input_row, input_tag %}
 {% from 'macros/wrapper.jinja' import wrap %}
 
+{% set action = 'Редактирование задачи' if mode_edit else 'Новая задача' %}
+
 {% block title %}
 {% if contest %}
-Новая задача - {{ contest.name }}
+{{ action }} - {{ contest.name }}
 {% else %}
-Новая задача
+{{ action }}
 {% endif %}
 {% endblock %}
 
 {% block column_a %}
 <div class="problem-new">
-  {% call wrap("Новая задача" + (' - %s' % contest.name if contest else '')) %}
+  {% call wrap(action + (' - %s' % contest.name if contest else '')) %}
   <form id="form" method="post">
     {{ input_row(form.letter, 'Буква') }}
     {{ input_row(form.name, 'Название задачи') }}
@@ -86,7 +88,9 @@
 {% block column_b %}
 {% set cancel_contest_url = url_for('contest.view', id=contest.id) if contest else None %}
 {% set cancel_problem_url = '' %}
-{% set cancel_url = cancel_contest_url if cancel_contest_url else cancel_problem_url %}
+{% set cancel_new_url = cancel_contest_url if cancel_contest_url else cancel_problem_url %}
+{% set cancel_edit_url = url_for('problem.view', id=problem.id) if mode_edit else None %}
+{% set cancel_url = cancel_edit_url if mode_edit else cancel_new_url %}
 
 {{ block_actions(cancel_url) }}
 {% endblock %}

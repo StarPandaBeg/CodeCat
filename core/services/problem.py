@@ -35,6 +35,27 @@ def create(form: ProblemNewForm, contest: Contest | None = None):
     db_session.commit()
 
 
+def edit(problem: Problem, form: ProblemNewForm):
+    # Tags will be processed manually
+    tags: List[ProblemTag] = ProblemTag.query.all()
+    problem.tags.clear()
+    tags_to_add = _assignProblemTags(problem, form.tags.data, tags)
+    for tag in tags_to_add:
+        tagModel = ProblemTag(tag=tag)
+        problem.tags.append(tagModel)
+        db_session.add(tagModel)
+    del form.tags
+
+    # Due to issues with removed items population, it's easier to remove all related objects and create new ones
+    ProblemExample.query.filter(
+        ProblemExample.problem_id == problem.id).delete()
+    ProblemSolution.query.filter(
+        ProblemSolution.problem_id == problem.id).delete()
+
+    form.populate_obj(problem)
+    db_session.commit()
+
+
 def _createProblemExamples(problem: Problem, examples: list[dict[str, str]]):
     # TODO: Impove typing - idk how to implement it there
     for example in examples:
