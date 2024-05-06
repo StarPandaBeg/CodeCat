@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sqlalchemy import Enum, ForeignKey, Integer, String, Text, Table, Column, column
+import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import List, TYPE_CHECKING
 from core.util.status import ProblemStatus
@@ -9,12 +9,13 @@ from core.database import Base
 if TYPE_CHECKING:
     from core.models.contest import Contest
 
-tag_association_table = Table(
+tag_association_table = sa.Table(
     "problem_tags",
     Base.metadata,
-    Column("problem_id", ForeignKey("problems.id",
-           ondelete='CASCADE'), primary_key=True),
-    Column("tag_id", ForeignKey("tags.id", ondelete='CASCADE'), primary_key=True),
+    sa.Column("problem_id", sa.ForeignKey("problems.id",
+                                          ondelete='CASCADE'), primary_key=True),
+    sa.Column("tag_id", sa.ForeignKey(
+        "tags.id", ondelete='CASCADE'), primary_key=True),
 )
 
 
@@ -22,29 +23,29 @@ class Problem(Base):
     __tablename__ = 'problems'
 
     id: Mapped[int] = mapped_column(
-        Integer(), primary_key=True, autoincrement=True)
-    contest_id: Mapped[int] = mapped_column(ForeignKey(
+        sa.Integer(), primary_key=True, autoincrement=True)
+    contest_id: Mapped[int] = mapped_column(sa.ForeignKey(
         "contests.id", ondelete='SET NULL'), nullable=True)
-    letter: Mapped[str] = mapped_column(String(4), nullable=False)
-    name: Mapped[str] = mapped_column(String(64), nullable=False)
-    time_limit: Mapped[str] = mapped_column(String(16))
-    memory_limit: Mapped[str] = mapped_column(String(16))
-    status: Mapped[ProblemStatus] = mapped_column(Enum(ProblemStatus))
-    text: Mapped[str] = mapped_column(Text())
-    data_in: Mapped[str] = mapped_column(Text())
-    data_out: Mapped[str] = mapped_column(Text())
+    letter: Mapped[str] = mapped_column(sa.String(4), nullable=False)
+    name: Mapped[str] = mapped_column(sa.String(64), nullable=False)
+    time_limit: Mapped[str] = mapped_column(sa.String(16))
+    memory_limit: Mapped[str] = mapped_column(sa.String(16))
+    status: Mapped[ProblemStatus] = mapped_column(sa.Enum(ProblemStatus))
+    text: Mapped[str] = mapped_column(sa.Text())
+    data_in: Mapped[str] = mapped_column(sa.Text())
+    data_out: Mapped[str] = mapped_column(sa.Text())
 
     contest: Mapped["Contest"] = relationship(back_populates="problems")
 
     tags: Mapped[List[ProblemTag]] = relationship(
-        secondary=tag_association_table, back_populates="problems", order_by=column("tag")
+        secondary=tag_association_table, back_populates="problems", order_by=sa.column("tag")
     )
     examples: Mapped[List[ProblemExample]] = relationship(
-        back_populates="problem", order_by=column("id")
+        back_populates="problem", order_by=sa.column("id")
     )
-    example_description: Mapped[str] = mapped_column(Text())
+    example_description: Mapped[str] = mapped_column(sa.Text())
     solutions: Mapped[List[ProblemSolution]] = relationship(
-        back_populates="problem", order_by=column("id")
+        back_populates="problem", order_by=sa.column("id")
     )
 
     @property
@@ -76,8 +77,8 @@ class ProblemTag(Base):
     __tablename__ = 'tags'
 
     id: Mapped[int] = mapped_column(
-        Integer(), primary_key=True, autoincrement=True)
-    tag: Mapped[str] = mapped_column(String(64), nullable=False)
+        sa.Integer(), primary_key=True, autoincrement=True)
+    tag: Mapped[str] = mapped_column(sa.String(64), nullable=False)
     problems: Mapped[List[Problem]] = relationship(
         secondary=tag_association_table, back_populates="tags"
     )
@@ -87,11 +88,11 @@ class ProblemExample(Base):
     __tablename__ = 'problem_examples'
 
     id: Mapped[int] = mapped_column(
-        Integer(), primary_key=True, autoincrement=True)
+        sa.Integer(), primary_key=True, autoincrement=True)
     problem_id: Mapped[int] = mapped_column(
-        ForeignKey("problems.id", ondelete='CASCADE'))
-    input:  Mapped[str] = mapped_column(Text(), nullable=False)
-    output:  Mapped[str] = mapped_column(Text(), nullable=False)
+        sa.ForeignKey("problems.id", ondelete='CASCADE'))
+    input:  Mapped[str] = mapped_column(sa.Text(), nullable=False)
+    output:  Mapped[str] = mapped_column(sa.Text(), nullable=False)
 
     problem: Mapped[Problem] = relationship(back_populates="examples")
 
@@ -100,11 +101,12 @@ class ProblemSolution(Base):
     __tablename__ = 'problem_solutions'
 
     id: Mapped[int] = mapped_column(
-        Integer(), primary_key=True, autoincrement=True)
+        sa.Integer(), primary_key=True, autoincrement=True)
     problem_id: Mapped[int] = mapped_column(
-        ForeignKey("problems.id", ondelete='CASCADE'))
-    code: Mapped[str] = mapped_column(Text(), nullable=False)
-    lang: Mapped[str] = mapped_column(String(16), nullable=False)
-    comment: Mapped[str] = mapped_column(Text())
+        sa.ForeignKey("problems.id", ondelete='CASCADE'))
+    code: Mapped[str] = mapped_column(sa.Text(), nullable=False)
+    lang: Mapped[str] = mapped_column(sa.String(16), nullable=False)
+    comment: Mapped[str] = mapped_column(sa.Text())
 
     problem: Mapped[Problem] = relationship(back_populates="solutions")
+
