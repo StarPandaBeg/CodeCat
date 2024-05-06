@@ -3,11 +3,13 @@
 {% from 'macros/wrapper.jinja' import wrap %}
 {% from 'macros/block-util.jinja' import block_search %}
 
-{% block title %} Соревнования {% endblock %}
+{% set action = 'Соревнования - Результаты поиска' if mode_search else 'Соревнования' %}
+
+{% block title %} {{ action }} {% endblock %}
 {% set tab = 'contests' %}
 
 {% block column_a %}
-{% call wrap("Список соревнований") %}
+{% call wrap(action) %}
 <table class="table contest-table">
   <thead>
     <tr>
@@ -45,7 +47,8 @@
 {% endblock %}
 
 {% block column_b %}
-{{ block_search("/contests/search") }}
+{% set query_initial = query if query else '' %}
+{{ block_search(url_for("contest.search"), query = query_initial, back_url=url_for('contest.index')) }}
 {% endblock %}
 
 {% block style %}

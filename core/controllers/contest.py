@@ -62,6 +62,14 @@ def delete(id):
     return '', 204
 
 
+def search():
+    query = request.form.get('query', 'no')
+    if not query:
+        abort(400)
+    contests = contest_service.search(query)
+    return render_template("contest-index.jinja", contests=contests, mode_search=True, query=query)
+
+
 def create_problem(id):
     contest = get_or_404(Contest.query, id)
     tags = ProblemTag.query.all()

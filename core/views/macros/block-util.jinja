@@ -1,17 +1,20 @@
 {% from 'macros/block-base.jinja' import block_row, block_title, block %}
 
-{% macro block_search(action) -%}
+{% macro block_search(action, query = '', back_url='') -%}
 {% call block() %}
 {{ block_title("Поиск") }}
 {% call block_row() %}
 <span class="block-search">
   <form action="{{ action }}" method="post">
     <div class="input-row">
-      <input type="search" class="input" placeholder="...">
+      <input type="search" class="input" placeholder="..." value="{{query}}" name="query">
       <button type="submit" class="button-search" title="Поиск">
         <span class="mdi mdi-magnify mdi-24px"></span>
       </button>
     </div>
+    {% if query and back_url %}
+    <a href="{{back_url}}" class="back">Назад</a>
+    {% endif %}
   </form>
 </span>
 {% endcall %}

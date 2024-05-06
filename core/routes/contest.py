@@ -13,3 +13,5 @@ bp.delete('/<id>')(contest.delete)
 
 bp.get('/<id>/new')(contest.create_problem)
 bp.post('/<id>/new')(contest.store_problem)
+
+bp.post('/search')(contest.search)

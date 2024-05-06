@@ -27,3 +27,8 @@ def delete(id: int, form: ContestDeleteForm):
         Problem.query.filter(Problem.contest_id == id).delete()
     Contest.query.filter(Contest.id == id).delete()
     db_session.commit()
+
+
+def search(query: str):
+    search = f"%{query}%"
+    return Contest.query.filter(Contest.name.ilike(search)).all()
