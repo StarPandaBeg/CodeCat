@@ -1,0 +1,31 @@
+{% from 'macros/block-base.jinja' import block_row, block_title, block %}
+
+{% macro block_search(action) -%}
+{% call block() %}
+{{ block_title("Поиск") }}
+{% call block_row() %}
+<span class="block-search">
+  <form action="{{ action }}" method="post">
+    <div class="input-row">
+      <input type="search" class="input" placeholder="...">
+      <button type="submit" class="button-search" title="Поиск">
+        <span class="mdi mdi-magnify mdi-24px"></span>
+      </button>
+    </div>
+  </form>
+</span>
+{% endcall %}
+{% endcall %}
+{%- endmacro %}
+
+{% macro block_actions(cancel_url, form_id="form") -%}
+{% call block() %}
+{{ block_title("Действия") }}
+{% call block_row() %}
+<span class="actions">
+  <p><button type="submit" form="{{form_id}}">Сохранить</button></p>
+  <p><a href="{{ cancel_url }}">Отмена</a></p>
+</span>
+{% endcall %}
+{% endcall %}
+{%- endmacro %}

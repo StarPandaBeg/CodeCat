@@ -31,7 +31,7 @@ function autocompleteTagsUpdateList(id) {
     li.innerHTML = `
     <div class="chip">
       ${tag}
-      <a href="#" onclick="autocompleteTagsRemove('${id}', '${tag}')">&#10006;</a>
+      <a href="javascript:void(0)" onclick="autocompleteTagsRemove('${id}', '${tag}')">&#10006;</a>
     </div>
     <input type="hidden" name="tags-${index++}" value="${tag}"/>
     `;

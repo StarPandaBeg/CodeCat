@@ -1,0 +1,61 @@
+{% extends "layouts/two-column.jinja" %}
+
+{% from 'macros/wrapper.jinja' import wrap %}
+{% from 'macros/block-util.jinja' import block_search %}
+
+{% block title %} Соревнования {% endblock %}
+{% set tab = 'contests' %}
+
+{% block column_a %}
+{% call wrap("Список соревнований") %}
+<table class="table contest-table">
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Дата</th>
+      <th>Задач</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for contest in contests %}
+    <tr>
+      <td>{{ contest.name }}</td>
+      <td>{{ contest.date.strftime('%d.%m.%Y') }}</td>
+      <td>
+        {{ contest.problem_stats[0] -}}
+        /
+        {{- contest.problems|length }}
+      </td>
+      <td align="right">
+        <a href="{{ url_for('contest.view', id=contest.id) }}">Подробнее</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endcall %}
+<div class="contest-new">
+  <a href="{{ url_for('contest.create') }}">Добавить</a>
+</div>
+{% endblock %}
+
+{% block column_b %}
+{{ block_search("/contests/search") }}
+{% endblock %}
+
+{% block style %}
+{{ super() }}
+<style>
+  .contest-new {
+    padding-top: 5px;
+    text-align: right;
+    font-size: .8rem;
+  }
+
+  .contest-new a {
+    color: darkblue;
+    opacity: .75;
+  }
+</style>
+{% endblock %}

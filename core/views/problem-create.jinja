@@ -1,0 +1,240 @@
+{% extends "layouts/two-column.jinja" %}
+
+{% from 'macros/block-util.jinja' import block_actions %}
+{% from 'macros/input.jinja' import input_row, input_tag %}
+{% from 'macros/wrapper.jinja' import wrap %}
+
+{% block title %}
+{% if contest %}
+Новая задача - {{ contest.name }}
+{% else %}
+Новая задача
+{% endif %}
+{% endblock %}
+
+{% block column_a %}
+<div class="problem-new">
+  {% call wrap("Новая задача" + (' - %s' % contest.name if contest else '')) %}
+  <form id="form" method="post">
+    {{ input_row(form.letter, 'Буква') }}
+    {{ input_row(form.name, 'Название задачи') }}
+    <br />
+    {{ input_tag(tags|map(attribute='tag')|list, 'Тэги') }}
+    <br />
+    {{ input_row(form.status, 'Статус') }}
+    {{ input_row(form.time_limit, 'Лимит времени') }}
+    {{ input_row(form.memory_limit, 'Лимит памяти') }}
+    <br />
+    {{ input_row(form.text, 'Текст задачи') }}
+    {{ input_row(form.data_in, 'Входные данные') }}
+    {{ input_row(form.data_out, 'Выходные данные') }}
+    <br />
+    <div class="problem-new__header">
+      <h2>Примеры</h2>
+      <a href="javascript:void(0)" onclick="addExample()">Добавить</a>
+    </div>
+    {% if form.examples.errors %}
+    <ul class="problem-new__header-errors">
+      {% for error in form.examples.errors|rejectattr('input') %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <table class="table table-examples">
+      <tbody>
+        {% for field in form.examples %}
+        <td>
+          {{ input_row(field.input, 'Входные данные') }}
+        </td>
+        <td>
+          {{ input_row(field.output, 'Выходные данные') }}
+        </td>
+        <td>
+          <a href="javascript:void(0)" onclick="removeExample.call(this)">&#10006;</a>
+        </td>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br />
+    {{ input_row(form.example_description, 'Пояснение к примерам') }}
+    <br />
+    <div class="problem-new__header">
+      <h2>Решения</h2>
+      <a href="javascript:void(0)" onclick="addSolution()">Добавить</a>
+    </div>
+    <table class="table table-solutions">
+      <tbody>
+        {% for field in form.solutions %}
+        <tr>
+          <td>
+            {{ input_row(field.lang, 'Язык') }}
+            {{ input_row(field.code, 'Код') }}
+            {{ input_row(field.comment, 'Пояснение') }}
+          </td>
+          <td align="right">
+            <a href="javascript:void(0)" onclick="removeSolution.call(this)">&#10006;</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </form>
+  {% endcall %}
+</div>
+{% endblock %}
+
+{% block column_b %}
+{% set cancel_contest_url = url_for('contest.view', id=contest.id) if contest else None %}
+{% set cancel_problem_url = '' %}
+{% set cancel_url = cancel_contest_url if cancel_contest_url else cancel_problem_url %}
+
+{{ block_actions(cancel_url) }}
+{% endblock %}
+
+{% block style %}
+{{ super() }}
+<style>
+  .problem-new .problem-new__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .problem-new .problem-new__header h2 {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .problem-new .problem-new__header a {
+    font-size: .9rem;
+    color: darkblue;
+  }
+
+  .problem-new .table-examples td,
+  .problem-new .table-solutions td {
+    padding: 10px 5px !important;
+  }
+
+  .problem-new .table-examples td .input-row__content {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .problem-new .table-examples td .input-row__content label {
+    font-size: .9rem;
+    opacity: .75;
+    width: auto;
+  }
+
+  .problem-new .table-examples td a,
+  .problem-new .table-solutions td a {
+    display: inline-block;
+    font-size: .9rem;
+    color: black;
+    text-decoration: none;
+    vertical-align: middle;
+  }
+
+  .problem-new .table-examples textarea {
+    width: 100%;
+    resize: vertical;
+  }
+
+
+  .problem-new__header-errors {
+    padding-top: 5px;
+  }
+
+  .problem-new__header-errors li {
+    list-style: none;
+    font-size: .8rem;
+    color: red;
+  }
+</style>
+{% endblock %}
+
+{% block script %}
+<script>
+  function addExample() {
+    const container = document.querySelector(".table.table-examples tbody");
+    const total = container.children.length
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div class="input-row">
+          <div class="input-row__content">
+            <label for="examples-${total}-input">Входные данные</label>
+            <div class="input-row__input">
+              <textarea name="examples-${total}-input" class="input"></textarea>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="input-row">
+          <div class="input-row__content">
+            <label for="examples-${total}-output">Выходные данные</label>
+            <div class="input-row__input">
+              <textarea name="examples-${total}-output" class="input"></textarea>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <a href="javascript:void(0)" onclick="removeExample.call(this)">&#10006;</a>
+      </td>
+    `
+    container.appendChild(tr)
+  }
+
+  function addSolution() {
+    const container = document.querySelector(".table.table-solutions tbody");
+    const total = container.children.length
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div class="input-row">
+          <div class="input-row__content">
+            <label for="solutions-${total}-lang">Язык</label>
+            <div class="input-row__input">
+              <input type="text" name="solutions-${total}-lang" class="input" required/>
+            </div>
+          </div>
+        </div>
+        <div class="input-row">
+          <div class="input-row__content">
+            <label for="solutions-${total}-code">Код</label>
+            <div class="input-row__input">
+              <textarea name="solutions-${total}-code" class="input"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="input-row">
+          <div class="input-row__content">
+            <label for="solutions-${total}-comment">Пояснение</label>
+            <div class="input-row__input">
+              <textarea name="solutions-${total}-comment" class="input"></textarea>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td align="right">
+        <a href="javascript:void(0)" onclick="removeSolution.call(this)">&#10006;</a>
+      </td>
+    `
+    container.appendChild(tr)
+  }
+
+  function removeSolution() {
+    const tr = this.closest('tr')
+    tr.remove()
+  }
+
+  function removeExample() {
+    const tr = this.closest('tr')
+    tr.remove()
+  }
+</script>
+{% endblock %}

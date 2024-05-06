@@ -1,0 +1,12 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<ul class="flashes">
+  {% for category,message in messages %}
+  <li class="flashes__{{category}}">
+    <p>{{ message }}</p>
+    <a href="#" onclick="this.parentElement.style.display = 'none'">&#10006;</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
