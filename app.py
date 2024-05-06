@@ -1,22 +1,31 @@
-from flask import Flask
-from core.database import db_session, init_db
+# Configuration must be loaded very early
+from bootstrap.config import prepare_config
+prepare_config()  # noqa
+
 from filters import init_jinja_filters
 from core.routes import register_routes
+from core.database import db_session, init_db
+from flask import Flask
+import json
 
 
-def create_app():
+def create_flask_app():
     app = Flask(__name__)
-    app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-    app.config['SERVER_NAME'] = "localhost:5000"
     app.template_folder = 'core/views'
+
+    _import_flask_config(app)
     register_routes(app)
+    init_jinja_filters(app)
 
     return app
 
 
-app = create_app()
+def _import_flask_config(app: Flask):
+    app.config.from_file('config/flask.json', load=json.load)
+
+
+app = create_flask_app()
 init_db()
-init_jinja_filters(app)
 
 
 @app.teardown_appcontext

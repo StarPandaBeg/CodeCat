@@ -154,3 +154,10 @@ cython_debug/
 
 # VS Code
 .vscode/
+
+# Config files
+config/*.json
+!config/*.example.json
+
+# Application data
+.data/
