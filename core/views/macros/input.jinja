@@ -5,7 +5,7 @@
   <div class="input-row__content">
     <label for="{{field.name}}">{{label}}</label>
     <div class="input-row__input">
-      {{ field(class_='input') }}
+      {{ field(class_='input', **kwargs) }}
       {% if field.errors %}
       <ul class="input-row__errors">
         {% for error in field.errors %}

@@ -16,6 +16,7 @@ def edit(id, form=None):
     tags = ProblemTag.query.all()
     if not form:
         form = ProblemNewForm(obj=problem)
+        form.status.data = problem.status.name
 
     return render_template("problem-form.jinja",
                            form=form,

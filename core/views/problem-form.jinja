@@ -23,7 +23,7 @@
     <br />
     {{ input_tag(tags|map(attribute='tag')|list, 'Тэги', id='tag-main') }}
     <br />
-    {{ input_row(form.status, 'Статус') }}
+    {{ input_row(form.status, 'Статус', autocomplete='off') }}
     {{ input_row(form.time_limit, 'Лимит времени') }}
     {{ input_row(form.memory_limit, 'Лимит памяти') }}
     <br />
