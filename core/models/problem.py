@@ -12,8 +12,9 @@ if TYPE_CHECKING:
 tag_association_table = Table(
     "problem_tags",
     Base.metadata,
-    Column("problem_id", ForeignKey("problems.id"), primary_key=True),
-    Column("tag_id", ForeignKey("tags.id"), primary_key=True),
+    Column("problem_id", ForeignKey("problems.id",
+           ondelete='CASCADE'), primary_key=True),
+    Column("tag_id", ForeignKey("tags.id", ondelete='CASCADE'), primary_key=True),
 )
 
 
@@ -87,7 +88,8 @@ class ProblemExample(Base):
 
     id: Mapped[int] = mapped_column(
         Integer(), primary_key=True, autoincrement=True)
-    problem_id: Mapped[int] = mapped_column(ForeignKey("problems.id"))
+    problem_id: Mapped[int] = mapped_column(
+        ForeignKey("problems.id", ondelete='CASCADE'))
     input:  Mapped[str] = mapped_column(Text(), nullable=False)
     output:  Mapped[str] = mapped_column(Text(), nullable=False)
 
@@ -99,7 +101,8 @@ class ProblemSolution(Base):
 
     id: Mapped[int] = mapped_column(
         Integer(), primary_key=True, autoincrement=True)
-    problem_id: Mapped[int] = mapped_column(ForeignKey("problems.id"))
+    problem_id: Mapped[int] = mapped_column(
+        ForeignKey("problems.id", ondelete='CASCADE'))
     code: Mapped[str] = mapped_column(Text(), nullable=False)
     lang: Mapped[str] = mapped_column(String(16), nullable=False)
     comment: Mapped[str] = mapped_column(Text())
