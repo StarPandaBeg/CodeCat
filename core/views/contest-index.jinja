@@ -29,6 +29,7 @@
       </td>
       <td align="right">
         <a href="{{ url_for('contest.view', id=contest.id) }}">Подробнее</a>
+        <a href="javascript:void(0)" class="contest-delete" onclick="tryDeleteContest({{contest.id}})">&#10006;</a>
       </td>
     </tr>
     {% endfor %}
@@ -37,6 +38,9 @@
 {% endcall %}
 <div class="contest-new">
   <a href="{{ url_for('contest.create') }}">Добавить</a>
+  {% if contests|length > 0 %}
+  <a href="javascript:void(0)" onclick="toggleEdit()">Редактировать</a>
+  {% endif %}
 </div>
 {% endblock %}
 
@@ -57,5 +61,45 @@
     color: darkblue;
     opacity: .75;
   }
+
+  .contest-delete {
+    padding: 5px;
+    display: none;
+    padding-right: 0;
+    vertical-align: middle;
+    font-size: .9rem;
+    color: black !important;
+    text-decoration: none;
+  }
+
+  .contest-delete-active {
+    display: inline-block;
+  }
 </style>
+{% endblock %}
+
+{% block script %}
+<script>
+  function toggleEdit() {
+    document.querySelectorAll(".contest-delete").forEach(item => item.classList.toggle("contest-delete-active"))
+  }
+
+  function tryDeleteContest(id) {
+    if (!confirm("Вы действительно хотите удалить соревнование?")) return
+    const delete_problems = confirm("Удалить связанные задачи?")
+    deleteContest(id, delete_problems)
+  }
+
+  function deleteContest(id, delete_problems) {
+    const urlTemplate = "{{url_for('contest.delete', id='-1')}}"
+    const url = urlTemplate.replace("-1", id)
+
+    const data = new FormData()
+    data.append('delete_problems', delete_problems)
+    fetch(url, {
+      method: "DELETE",
+      body: data
+    }).then(() => location.reload())
+  }
+</script>
 {% endblock %}

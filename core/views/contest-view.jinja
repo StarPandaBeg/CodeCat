@@ -38,6 +38,7 @@
         {% if problem.solutions|length == 0 %}
         <span class="icon icon-no-code mdi mdi-24px mdi-xml" title="К задаче не добавлено решений"></span>
         {% endif %}
+        <a href="javascript:void(0)" class="problem-delete" onclick="tryDeleteProblem({{problem.id}})">&#10006;</a>
       </td>
     </tr>
     {% endfor %}
@@ -46,6 +47,9 @@
 {% endcall %}
 <div class="problem-new">
   <a href="{{ url_for('contest.create_problem', id=contest.id) }}">Добавить</a>
+  {% if contest.problems | length > 0 %}
+  <a href="javacript:void(0)" onclick="toggleEdit()">Редактировать</a>
+  {% endif %}
 </div>
 {% endblock %}
 
@@ -86,6 +90,10 @@
     padding: 10px !important;
   }
 
+  .contest-table tbody tr .icon::before {
+    vertical-align: middle;
+  }
+
   .contest-table tbody tr.solved {
     background: rgb(230, 255, 230);
   }
@@ -113,5 +121,40 @@
     color: darkblue;
     opacity: .75;
   }
+
+  .problem-delete {
+    padding: 5px;
+    display: none;
+    padding-right: 0;
+    vertical-align: middle;
+    font-size: .9rem;
+    color: black !important;
+    text-decoration: none;
+  }
+
+  .problem-delete-active {
+    display: inline-block;
+  }
 </style>
+{% endblock %}
+
+{% block script %}
+<script>
+  function toggleEdit() {
+    document.querySelectorAll(".problem-delete").forEach(item => item.classList.toggle("problem-delete-active"))
+  }
+
+  function tryDeleteProblem(id) {
+    if (!confirm("Вы действительно хотите удалить задачу?")) return
+    deleteProblem(id)
+  }
+
+  function deleteProblem(id) {
+    const urlTemplate = "{{url_for('problem.delete', id='-1')}}"
+    const url = urlTemplate.replace("-1", id)
+    fetch(url, {
+      method: "DELETE"
+    }).then(() => location.reload())
+  }
+</script>
 {% endblock %}
