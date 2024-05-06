@@ -4,7 +4,7 @@ from sqlalchemy import Enum, ForeignKey, Integer, String, Text, Table, Column
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import List, TYPE_CHECKING
 from core.util.status import ProblemStatus
-from database import Base
+from core.database import Base
 
 if TYPE_CHECKING:
     from core.models.contest import Contest

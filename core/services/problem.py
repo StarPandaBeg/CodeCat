@@ -3,7 +3,7 @@ from typing import List
 from core.models.contest import Contest
 from core.models.problem import Problem, ProblemExample, ProblemSolution, ProblemTag
 from core.validation.problem_new import ProblemNewForm
-from database import db_session
+from core.database import db_session
 
 
 def create(form: ProblemNewForm, contest: Contest | None = None):

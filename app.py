@@ -1,5 +1,5 @@
 from flask import Flask
-from database import db_session, init_db
+from core.database import db_session, init_db
 from filters import init_jinja_filters
 from core.routes import register_routes
 

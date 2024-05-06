@@ -1,6 +1,6 @@
 from typing import List
 from core.util.status import test_failed, test_solved, test_untouched
-from database import Base
+from core.database import Base
 from sqlalchemy import Integer, String, Date, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 

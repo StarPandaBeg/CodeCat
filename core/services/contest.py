@@ -1,6 +1,6 @@
 from core.models.contest import Contest
 from core.validation.contest_new import ContestNewForm
-from database import db_session
+from core.database import db_session
 
 
 def create(form: ContestNewForm):
