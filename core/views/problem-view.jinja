@@ -91,6 +91,15 @@
 {% endcall %}
 {% endif %}
 
+{% call block_row() %}
+<p>
+  <a href="{{ url_for('problem.edit', id=problem.id) }}" class="problem-action">Редактировать</a>
+</p>
+<p>
+  <a href="javascript:void(0)" onclick="tryDeleteProblem()" class="problem-action">Удалить</a>
+</p>
+{% endcall %}
+
 {% endcall %}
 {% endblock %}
 
@@ -175,5 +184,26 @@
     color: rgb(145, 16, 16);
     font-weight: 500;
   }
+
+  .problem-action {
+    color: darkblue;
+  }
 </style>
+{% endblock %}
+
+{% block script %}
+{% set back_url = url_for('contest.view', id=problem.contest.id) if problem.contest else '' %}
+<script>
+  function tryDeleteProblem() {
+    if (!confirm("Вы действительно хотите удалить задачу?")) return
+    deleteProblem()
+  }
+
+  function deleteProblem() {
+    const url = "{{url_for('problem.delete', id=problem.id)}}"
+    fetch(url, {
+      method: "DELETE"
+    }).then(() => location.href = "{{ back_url }}")
+  }
+</script>
 {% endblock %}
