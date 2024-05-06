@@ -2,6 +2,7 @@ from flask import flash, redirect, render_template, request, url_for
 
 from core.models.contest import Contest
 from core.models.problem import ProblemTag
+from core.services import get_or_404
 from core.validation.contest_new import ContestNewForm
 from core.validation.problem_new import ProblemNewForm
 import core.services.contest as contest_service
@@ -14,7 +15,7 @@ def index():
 
 
 def view(id):
-    contest = Contest.query.get(id)
+    contest = get_or_404(Contest.query, id)
     return render_template("contest-view.jinja", contest=contest)
 
 
@@ -33,14 +34,14 @@ def store():
 
 
 def create_problem(id):
-    contest = Contest.query.get(id)
+    contest = get_or_404(Contest.query, id)
     tags = ProblemTag.query.all()
     form = ProblemNewForm()
     return render_template("problem-create.jinja", form=form, contest=contest, tags=tags)
 
 
 def store_problem(id):
-    contest = Contest.query.get(id)
+    contest = get_or_404(Contest.query, id)
     form = ProblemNewForm(request.form)
     if not form.validate():
         tags = ProblemTag.query.all()
