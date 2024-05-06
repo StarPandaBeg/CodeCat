@@ -21,10 +21,10 @@
     {% for problem in contest.problems %}
     <tr class="{{ problem.css_class }}">
       <td>
-        <a href="#">{{ problem.letter }}</a>
+        <a href="{{ url_for('problem.view', id=problem.id) }}">{{ problem.letter }}</a>
       </td>
       <td>
-        <a href="#">{{ problem.name }}</a>
+        <a href="{{ url_for('problem.view', id=problem.id) }}">{{ problem.name }}</a>
       </td>
       <td>
         {% for tag in problem.tags %}
@@ -45,7 +45,7 @@
 </table>
 {% endcall %}
 <div class="problem-new">
-  <a href="#">Добавить</a>
+  <a href="{{ url_for('contest.create_problem', id=contest.id) }}">Добавить</a>
 </div>
 {% endblock %}
 
