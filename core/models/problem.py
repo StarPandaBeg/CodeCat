@@ -22,7 +22,8 @@ class Problem(Base):
 
     id: Mapped[int] = mapped_column(
         Integer(), primary_key=True, autoincrement=True)
-    contest_id: Mapped[int] = mapped_column(ForeignKey("contests.id"))
+    contest_id: Mapped[int] = mapped_column(ForeignKey(
+        "contests.id", ondelete='SET NULL'), nullable=True)
     letter: Mapped[str] = mapped_column(String(4), nullable=False)
     name: Mapped[str] = mapped_column(String(64), nullable=False)
     time_limit: Mapped[str] = mapped_column(String(16))
