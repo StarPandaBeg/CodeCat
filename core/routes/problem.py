@@ -4,3 +4,4 @@ from core.controllers import problem
 bp = Blueprint('problem', __name__, url_prefix='/problems')
 
 bp.route("/<id>")(problem.view)
+bp.delete("/<id>")(problem.delete)
