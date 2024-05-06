@@ -79,6 +79,15 @@
 </p>
 {% endcall %}
 
+{% call block_row() %}
+<p>
+  <a href="{{ url_for('contest.edit', id=contest.id) }}" class="contest-action">Редактировать</a>
+</p>
+<p>
+  <a href="javascript:void(0)" onclick="tryDeleteContest()" class="contest-action">Удалить</a>
+</p>
+{% endcall %}
+
 {% endcall %}
 {% endblock %}
 
@@ -109,6 +118,10 @@
   .contest-table tbody tr.failed .icon,
   .contest-table tbody tr .icon-no-code {
     color: rgb(255, 50, 50) !important;
+  }
+
+  .contest-action {
+    color: darkblue;
   }
 
   .problem-new {
@@ -155,6 +168,22 @@
     fetch(url, {
       method: "DELETE"
     }).then(() => location.reload())
+  }
+
+  function tryDeleteContest() {
+    if (!confirm("Вы действительно хотите удалить соревнование?")) return
+    const delete_problems = confirm("Удалить связанные задачи?")
+    deleteContest(delete_problems)
+  }
+
+  function deleteContest(delete_problems) {
+    const url = "{{url_for('contest.delete', id=contest.id)}}"
+    const data = new FormData()
+    data.append('delete_problems', delete_problems)
+    fetch(url, {
+      method: "DELETE",
+      body: data
+    }).then(() => location.href = "{{ url_for('contest.index') }}")
   }
 </script>
 {% endblock %}
