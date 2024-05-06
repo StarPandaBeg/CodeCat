@@ -9,7 +9,7 @@ import core.services.problem as problem_service
 
 
 def index():
-    contests = Contest.query.all()
+    contests = Contest.query.order_by(Contest.date.desc()).all()
     return render_template("contest-index.jinja", contests=contests)
 
 

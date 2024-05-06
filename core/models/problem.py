@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sqlalchemy import Enum, ForeignKey, Integer, String, Text, Table, Column
+from sqlalchemy import Enum, ForeignKey, Integer, String, Text, Table, Column, column
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import List, TYPE_CHECKING
 from core.util.status import ProblemStatus
@@ -35,14 +35,14 @@ class Problem(Base):
     contest: Mapped["Contest"] = relationship(back_populates="problems")
 
     tags: Mapped[List[ProblemTag]] = relationship(
-        secondary=tag_association_table, back_populates="problems"
+        secondary=tag_association_table, back_populates="problems", order_by=column("tag")
     )
     examples: Mapped[List[ProblemExample]] = relationship(
-        back_populates="problem"
+        back_populates="problem", order_by=column("id")
     )
     example_description: Mapped[str] = mapped_column(Text())
     solutions: Mapped[List[ProblemSolution]] = relationship(
-        back_populates="problem"
+        back_populates="problem", order_by=column("id")
     )
 
     @property

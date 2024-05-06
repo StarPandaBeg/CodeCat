@@ -1,7 +1,7 @@
 from typing import List
 from core.util.status import test_failed, test_solved, test_untouched
 from core.database import Base
-from sqlalchemy import Integer, String, Date, Text
+from sqlalchemy import Integer, String, Date, Text, column, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 import typing
@@ -20,7 +20,8 @@ class Contest(Base):
     description: Mapped[str] = mapped_column(Text())
     link: Mapped[str] = mapped_column(String(64))
 
-    problems: Mapped[List["Problem"]] = relationship(back_populates="contest")
+    problems: Mapped[List["Problem"]] = relationship(
+        back_populates="contest", order_by=column("letter"))
 
     @property
     def problem_stats(self):
