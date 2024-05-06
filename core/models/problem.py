@@ -120,10 +120,29 @@ class ProblemFTS(Base2):
     text: Mapped[str] = mapped_column(sa.Text(), nullable=False)
 
 
-update_fts = sa.DDL('''CREATE TRIGGER problem_fts_update AFTER INSERT ON problems
-  BEGIN
-    INSERT INTO problems_idx (id, name, sa.Text) 
-    VALUES (new.id, new.name, new.sa.Text);
-  END;''')
+fts_update = sa.DDL('''
+CREATE TRIGGER problem_fts_update AFTER INSERT ON problems
+BEGIN
+    INSERT INTO problems_idx (id, name, text) 
+    VALUES (new.id, new.name, new.text);
+END;
+''')
+fts_recreate = sa.DDL('''
+CREATE TRIGGER problem_fts_recreate AFTER UPDATE ON problems
+BEGIN
+    DELETE FROM problems_idx WHERE id = new.id;
+    INSERT INTO problems_idx (id, name, text) 
+    VALUES (new.id, new.name, new.text);
+END;
+''')
+fts_delete = sa.DDL('''
+CREATE TRIGGER problem_fts_delete AFTER DELETE ON problems
+BEGIN
+    DELETE FROM problems_idx WHERE id = old.id;
+END;
+''')
+
 sa.event.listen(Problem.__table__, 'after_create', CreateFtsTable(ProblemFTS))
-sa.event.listen(Problem.__table__, 'after_create', update_fts)
+sa.event.listen(Problem.__table__, 'after_create', fts_update)
+sa.event.listen(Problem.__table__, 'after_create', fts_recreate)
+sa.event.listen(Problem.__table__, 'after_create', fts_delete)
