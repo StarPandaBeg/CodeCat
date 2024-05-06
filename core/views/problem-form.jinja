@@ -21,7 +21,7 @@
     {{ input_row(form.letter, 'Буква') }}
     {{ input_row(form.name, 'Название задачи') }}
     <br />
-    {{ input_tag(tags|map(attribute='tag')|list, 'Тэги') }}
+    {{ input_tag(tags|map(attribute='tag')|list, 'Тэги', id='tag-main') }}
     <br />
     {{ input_row(form.status, 'Статус') }}
     {{ input_row(form.time_limit, 'Лимит времени') }}
@@ -158,6 +158,8 @@
 {% endblock %}
 
 {% block script %}
+{{ super() }}
+
 <script>
   function addExample() {
     const container = document.querySelector(".table.table-examples tbody");
@@ -240,5 +242,17 @@
     const tr = this.closest('tr')
     tr.remove()
   }
+</script>
+{% endblock %}
+
+{% block script_end %}
+{{ super() }}
+{% set problem_tags = problem.tags | map(attribute = 'tag') | list | safe %}
+<script>
+  (function () {
+    const value = {{ problem_tags }} 
+    autocompleteValues['tag-main'] = value
+    autocompleteTagsUpdateList('tag-main')
+  }) ()
 </script>
 {% endblock %}
