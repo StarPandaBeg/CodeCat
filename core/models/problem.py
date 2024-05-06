@@ -4,7 +4,7 @@ import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import List, TYPE_CHECKING
 from core.util.status import ProblemStatus
-from core.database import Base
+from core.database import Base, Base2, CreateFtsTable
 
 if TYPE_CHECKING:
     from core.models.contest import Contest
@@ -110,3 +110,20 @@ class ProblemSolution(Base):
 
     problem: Mapped[Problem] = relationship(back_populates="solutions")
 
+
+class ProblemFTS(Base2):
+    __tablename__ = 'problems_idx'
+
+    id: Mapped[int] = mapped_column(
+        sa.Integer(), primary_key=True)
+    name: Mapped[str] = mapped_column(sa.String(64), nullable=False)
+    text: Mapped[str] = mapped_column(sa.Text(), nullable=False)
+
+
+update_fts = sa.DDL('''CREATE TRIGGER problem_fts_update AFTER INSERT ON problems
+  BEGIN
+    INSERT INTO problems_idx (id, name, sa.Text) 
+    VALUES (new.id, new.name, new.sa.Text);
+  END;''')
+sa.event.listen(Problem.__table__, 'after_create', CreateFtsTable(ProblemFTS))
+sa.event.listen(Problem.__table__, 'after_create', update_fts)

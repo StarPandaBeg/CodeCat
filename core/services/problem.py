@@ -1,7 +1,9 @@
 from typing import List
 
+from sqlalchemy import select, text
+
 from core.models.contest import Contest
-from core.models.problem import Problem, ProblemExample, ProblemSolution, ProblemTag
+from core.models.problem import Problem, ProblemExample, ProblemFTS, ProblemSolution, ProblemTag
 from core.validation.problem_new import ProblemNewForm
 from core.database import db_session
 
@@ -54,6 +56,13 @@ def edit(problem: Problem, form: ProblemNewForm):
 
     form.populate_obj(problem)
     db_session.commit()
+
+
+def search(query: str):
+    fts_stmt = select(ProblemFTS.id).where(
+        text(ProblemFTS.__tablename__ + f" MATCH '{query}'")
+    )
+    return Problem.query.where(Problem.id.in_(fts_stmt)).all()
 
 
 def _createProblemExamples(problem: Problem, examples: list[dict[str, str]]):
