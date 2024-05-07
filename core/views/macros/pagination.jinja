@@ -1,0 +1,17 @@
+{% macro pagination(pag) %}
+<div class="pagination">
+{% if pag.page > 1 %}
+    <a href="?page=1">&lt;&lt;</a>
+{% endif %}
+{% if pag.page > 1 %}
+    <a href="?page={{ pag.page - 1 }}">назад</a>
+{% endif %}
+{{ pag.page }}
+{% if pag.page < pag.total_pages %}
+    <a href="?page={{ pag.page + 1 }}">вперёд</a>
+{% endif %}
+{% if pag.page < pag.total_pages %}
+    <a href="?page={{ pag.total_pages }}">&gt;&gt;</a>
+{% endif %}
+</div>
+{% endmacro %}

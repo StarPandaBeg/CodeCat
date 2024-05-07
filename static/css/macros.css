@@ -196,3 +196,8 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+.pagination a {
+  color: darkblue;
+  font-size: .9rem;
+}
