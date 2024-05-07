@@ -247,7 +247,9 @@
 
 {% block script_end %}
 {{ super() }}
+{% if problem %}
 {% set problem_tags = problem.tags | map(attribute = 'tag') | list | safe %}
+
 <script>
   (function () {
     const value = {{ problem_tags }} 
@@ -255,4 +257,5 @@
     autocompleteTagsUpdateList('tag-main')
   }) ()
 </script>
+{% endif %}
 {% endblock %}
