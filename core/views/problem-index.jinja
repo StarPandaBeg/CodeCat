@@ -2,6 +2,7 @@
 
 {% from 'macros/block-util.jinja' import block_search %}
 {% from 'macros/chip.jinja' import chip %}
+{% from 'macros/pagination.jinja' import pagination %}
 {% from 'macros/wrapper.jinja' import wrap %}
 
 {% set action = 'Задачи - Результаты поиска' if mode_search else 'Задачи' %}
@@ -49,6 +50,11 @@
   </tbody>
 </table>
 {% endcall %}
+
+{% if pag %}
+{{ pagination(pag) }}
+{% endif %}
+
 {% endblock %}
 
 {% block column_b %}
@@ -83,6 +89,10 @@
   .problem-table tbody tr.failed .icon,
   .problem-table tbody tr .icon-no-code {
     color: rgb(255, 50, 50) !important;
+  }
+
+  .pagination {
+    text-align: right;
   }
 </style>
 {% endblock %}

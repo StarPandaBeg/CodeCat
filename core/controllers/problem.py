@@ -4,11 +4,18 @@ from core.database import db_session
 from core.services import get_or_404
 from core.validation.problem_new import ProblemNewForm
 from core.services import problem as problem_service
+from core.util.pagination import Pagination
 
 
 def index():
-    problems = Problem.query.order_by(Problem.id.desc()).all()
-    return render_template("problem-index.jinja", problems=problems)
+    page = request.args.get('page', 1, int)
+    stmt = Problem.query.order_by(Problem.id.desc())
+
+    pagination = Pagination(page)
+    pagination.set_stmt(stmt)
+
+    problems = pagination.paginate()
+    return render_template("problem-index.jinja", problems=problems, pag=pagination)
 
 
 def view(id):
