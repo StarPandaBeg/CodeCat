@@ -1,0 +1,88 @@
+{% extends "layouts/two-column.jinja" %}
+
+{% from 'macros/block-util.jinja' import block_search %}
+{% from 'macros/chip.jinja' import chip %}
+{% from 'macros/wrapper.jinja' import wrap %}
+
+{% set action = 'Задачи - Результаты поиска' if mode_search else 'Задачи' %}
+
+{% block title %} {{ action }} {% endblock %}
+{% set tab = 'problems' %}
+
+{% block column_a %}
+{% call wrap(action) %}
+<table class="table problem-table">
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Соревнование</th>
+      <th>Тэги</th>
+      <th>Статус</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for problem in problems %}
+    {% set letter = problem.letter if problem.letter else "" %}
+
+    <tr class="{{ problem.css_class }}">
+      <td>{{ letter -}} {{ problem.name }}</td>
+      <td>{{ problem.contest.name if problem.contest else '<без соревнования>' }}</td>
+      <td>
+        {% for tag in problem.tags %}
+        {{ chip(tag.tag) }}
+        {% endfor %}
+      </td>
+      <td>
+        {% if problem.status_icon %}
+        <span class="icon mdi mdi-24px {{ problem.status_icon }}" title="{{ problem.status_friendly }}"></span>
+        {% endif %}
+        {% if problem.solutions|length == 0 %}
+        <span class="icon icon-no-code mdi mdi-24px mdi-xml" title="К задаче не добавлено решений"></span>
+        {% endif %}
+      </td>
+      <td align="right">
+        <a href="{{ url_for('problem.view', id=problem.id) }}">Подробнее</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endcall %}
+{% endblock %}
+
+{% block column_b %}
+{% set query_initial = query if query else '' %}
+{{ block_search(url_for("problem.search"), query = query_initial, back_url=url_for('problem.index')) }}
+{% endblock %}
+
+{% block style %}
+{{ super() }}
+<style>
+  .problem-table thead tr th,
+  .problem-table tbody tr td {
+    padding: 10px;
+  }
+
+  .problem-table tbody tr .icon::before {
+    vertical-align: middle;
+  }
+
+  .problem-table tbody tr.solved {
+    background: rgb(230, 255, 230);
+  }
+
+  .problem-table tbody tr.failed {
+    background: rgb(255, 230, 230);
+  }
+
+  .problem-table tbody tr.solved .icon {
+    color: rgb(100, 205, 100);
+  }
+
+  .problem-table tbody tr.failed .icon,
+  .problem-table tbody tr .icon-no-code {
+    color: rgb(255, 50, 50) !important;
+  }
+</style>
+{% endblock %}

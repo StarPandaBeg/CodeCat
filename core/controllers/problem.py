@@ -1,9 +1,14 @@
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for, abort
 from core.models.problem import Problem, ProblemTag
 from core.database import db_session
 from core.services import get_or_404
 from core.validation.problem_new import ProblemNewForm
 from core.services import problem as problem_service
+
+
+def index():
+    problems = Problem.query.order_by(Problem.id.desc()).all()
+    return render_template("problem-index.jinja", problems=problems)
 
 
 def view(id):
@@ -43,3 +48,11 @@ def delete(id):
     db_session.commit()
     flash("Задача удалена!", "success")
     return '', 204
+
+
+def search():
+    query = request.form.get('query', 'no')
+    if not query:
+        abort(400)
+    problems = problem_service.search(query)
+    return render_template("problem-index.jinja", problems=problems, query=query, mode_search=True)
