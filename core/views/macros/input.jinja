@@ -19,7 +19,7 @@
 {% endmacro %}
 
 {% macro input_tag(tags, label) %}
-{% set id = kwargs['id'] if kwargs[id] else "tag-"+random_string(8) %}
+{% set id = kwargs['id'] if kwargs['id'] else "tag-"+random_string(8) %}
 
 <div class="input-row input-tag" id="{{id}}">
   <div class="input-row__content">
