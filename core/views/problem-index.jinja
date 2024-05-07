@@ -51,7 +51,7 @@
 </table>
 {% endcall %}
 
-{% if pag %}
+{% if pag and pag.total_pages > 1 %}
 {{ pagination(pag) }}
 {% endif %}
 
