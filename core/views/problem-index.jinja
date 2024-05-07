@@ -24,7 +24,7 @@
   </thead>
   <tbody>
     {% for problem in problems %}
-    {% set letter = problem.letter if problem.letter else "" %}
+    {% set letter = problem.letter+". " if problem.letter else "" %}
 
     <tr class="{{ problem.css_class }}">
       <td>{{ letter -}} {{ problem.name }}</td>
