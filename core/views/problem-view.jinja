@@ -193,7 +193,7 @@
 {% endblock %}
 
 {% block script %}
-{% set back_url = url_for('contest.view', id=problem.contest.id) if problem.contest else '' %}
+{% set back_url = url_for('contest.view', id=problem.contest.id) if problem.contest else url_for('problem.index') %}
 <script>
   function tryDeleteProblem() {
     if (!confirm("Вы действительно хотите удалить задачу?")) return
