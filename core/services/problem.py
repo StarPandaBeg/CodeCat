@@ -62,7 +62,8 @@ def search(query: str):
     fts_stmt = select(ProblemFTS.id).where(
         text(ProblemFTS.__tablename__ + f" MATCH '{query}'")
     )
-    return Problem.query.where(Problem.id.in_(fts_stmt)).all()
+    plain_stmt = Problem.query.filter(Problem.name.ilike(f"%{query}%"))
+    return Problem.query.where(Problem.id.in_(fts_stmt)).union(plain_stmt).all()
 
 
 def _createProblemExamples(problem: Problem, examples: list[dict[str, str]]):
