@@ -46,15 +46,17 @@
     <table class="table table-examples">
       <tbody>
         {% for field in form.examples %}
-        <td>
-          {{ input_row(field.input, 'Входные данные') }}
-        </td>
-        <td>
-          {{ input_row(field.output, 'Выходные данные') }}
-        </td>
-        <td>
-          <a href="javascript:void(0)" onclick="removeExample.call(this)">&#10006;</a>
-        </td>
+        <tr>
+          <td>
+            {{ input_row(field.input, 'Входные данные') }}
+          </td>
+          <td>
+            {{ input_row(field.output, 'Выходные данные') }}
+          </td>
+          <td>
+            <a href="javascript:void(0)" onclick="removeExample.call(this)">&#10006;</a>
+          </td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
