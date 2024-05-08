@@ -63,3 +63,18 @@ def search():
         return redirect(url_for('problem.index'))
     problems = problem_service.search(query)
     return render_template("problem-index.jinja", problems=problems, query=query, mode_search=True)
+
+
+def create():
+    tags = ProblemTag.query.all()
+    form = ProblemNewForm()
+    return render_template("problem-form.jinja", form=form, tags=tags)
+
+
+def store():
+    form = ProblemNewForm(request.form)
+    if not form.validate():
+        return create()
+    problem_service.create(form)
+    flash('Задача создана!', "success")
+    return redirect(url_for('problem.index'))

@@ -49,10 +49,12 @@
   </tbody>
 </table>
 {% endcall %}
-
-{% if pag and pag.total_pages > 1 %}
-{{ pagination(pag) }}
-{% endif %}
+<div class="problem-new">
+  <a href="{{ url_for('problem.create') }}">Добавить</a>
+  {% if pag and pag.total_pages > 1 %}
+    {{ pagination(pag) }}
+  {% endif %}
+</div>
 
 {% endblock %}
 
@@ -91,7 +93,19 @@
   }
 
   .pagination {
+    padding-top: 5px;
     text-align: right;
+  }
+
+  .problem-new {
+    padding-top: 5px;
+    text-align: right;
+    font-size: .8rem;
+  }
+
+  .problem-new a {
+    color: darkblue;
+    opacity: .75;
   }
 </style>
 {% endblock %}
