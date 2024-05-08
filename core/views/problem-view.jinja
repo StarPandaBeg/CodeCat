@@ -44,7 +44,7 @@
   </div>
   {% endfor %}
   {% if problem.example_description %}
-  <p class="example-description">{{ problem.example_description }}</p>
+  <p class="example-description">{{ problem.example_description | paragraphy }}</p>
   {% endif %}
   {% endcall %}
 
@@ -55,7 +55,7 @@
       {% call copyable(solution.lang, True, solution.lang) %}{{- solution.code|e -}}{% endcall %}
     </div>
     {% if solution.comment %}
-    <p class="solution_description">{{ solution.comment }}</p>
+    <p class="solution_description">{{ solution.comment | paragraphy }}</p>
     {% endif %}
   </div>
   {% endfor %}
