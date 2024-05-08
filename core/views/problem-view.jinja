@@ -17,18 +17,18 @@
 
   {% call spoiler("Текст задачи", True) %}
   <div class="problem-view__problem">
-    {{ problem.text | e | paragraphy }}
+    {{ problem.text | e | markdown }}
   </div>
   {% endcall %}
 
   {% call spoiler("Данные", True) %}
   <div class="problem-view__data">
     <h2>Входные данные</h2>
-    {{ problem.data_in | e | paragraphy }}
+    {{ problem.data_in | e | markdown }}
   </div>
   <div class="problem-view__data">
     <h2>Выходные данные</h2>
-    {{ problem.data_out | e | paragraphy }}
+    {{ problem.data_out | e | markdown }}
   </div>
   {% endcall %}
 
@@ -44,7 +44,7 @@
   </div>
   {% endfor %}
   {% if problem.example_description %}
-  <p class="example-description">{{ problem.example_description | paragraphy }}</p>
+  <p class="example-description">{{ problem.example_description | e | markdown }}</p>
   {% endif %}
   {% endcall %}
 
@@ -55,7 +55,9 @@
       {% call copyable(solution.lang, True, solution.lang) %}{{- solution.code|e -}}{% endcall %}
     </div>
     {% if solution.comment %}
-    <p class="solution_description">{{ solution.comment | paragraphy }}</p>
+    <div class="solution_description">
+    {{ solution.comment | e | markdown }}
+    </div>
     {% endif %}
   </div>
   {% endfor %}
@@ -130,27 +132,21 @@
     opacity: .75;
   }
 
-  .problem-view .problem-view__problem {
+  .problem-view .problem-view__problem,
+  .problem-view .problem-view__data,
+  .problem-view .example-description,
+  .problem-view .solution_description {
     font-size: .9rem;
     opacity: .75;
   }
 
-  .problem-view .problem-view__problem ul {
+  .problem-view .problem-view__problem ul, 
+  .problem-view .problem-view__problem ol {
     list-style-position: inside;
-  }
-
-  .problem-view .problem-view__problem ul li {
-    padding: 5px 0;
-  }
-
-  .problem-view .problem-view__problem ul li:first-child {
-    padding-top: 10px;
   }
 
   .problem-view .problem-view__data {
     padding: 5px 0;
-    font-size: .9rem;
-    opacity: .75;
   }
 
   .problem-view .problem-view__data h2 {
