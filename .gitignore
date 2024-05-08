@@ -161,3 +161,6 @@ config/*.json
 
 # Application data
 .data/
+
+# Folder for static resources related to problems
+static/storage
