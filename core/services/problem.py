@@ -60,7 +60,7 @@ def edit(problem: Problem, form: ProblemNewForm):
 
 def search(query: str):
     fts_stmt = select(ProblemFTS.id).where(
-        text(ProblemFTS.__tablename__ + f" MATCH '{query}'")
+        text(ProblemFTS.__tablename__ + f" MATCH '\"{query}\"'")
     )
     plain_stmt = Problem.query.filter(Problem.name.ilike(f"%{query}%"))
     return Problem.query.where(Problem.id.in_(fts_stmt)).union(plain_stmt).all()

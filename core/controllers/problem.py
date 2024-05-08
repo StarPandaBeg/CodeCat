@@ -60,6 +60,6 @@ def delete(id):
 def search():
     query = request.form.get('query', 'no')
     if not query:
-        abort(400)
+        return redirect(url_for('problem.index'))
     problems = problem_service.search(query)
     return render_template("problem-index.jinja", problems=problems, query=query, mode_search=True)

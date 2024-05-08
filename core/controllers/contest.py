@@ -65,7 +65,7 @@ def delete(id):
 def search():
     query = request.form.get('query', 'no')
     if not query:
-        abort(400)
+        return redirect(url_for('contest.index'))
     contests = contest_service.search(query)
     return render_template("contest-index.jinja", contests=contests, mode_search=True, query=query)
 
