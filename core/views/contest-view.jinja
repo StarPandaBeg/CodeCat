@@ -63,7 +63,7 @@
 
 {% if contest.description %}
 {% call block_row() %}
-{{ contest.description }}
+{{ contest.description | paragraphy }}
 {% endcall %}
 {% endif %}
 

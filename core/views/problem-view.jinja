@@ -21,7 +21,7 @@
   </div>
   {% endcall %}
 
-  {% call spoiler("Данные") %}
+  {% call spoiler("Данные", True) %}
   <div class="problem-view__data">
     <h2>Входные данные</h2>
     {{ problem.data_in | e | paragraphy }}
@@ -70,7 +70,7 @@
 
 {% if problem.contest.description %}
 {% call block_row() %}
-{{ problem.contest.description }}
+{{ problem.contest.description | paragraphy }}
 {% endcall %}
 {% endif %}
 
