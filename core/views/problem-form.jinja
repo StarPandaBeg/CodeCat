@@ -20,6 +20,7 @@
   <form id="form" method="post">
     {{ input_row(form.letter, 'Буква') }}
     {{ input_row(form.name, 'Название задачи') }}
+    {{ input_row(form.link, 'Ссылка на задачу') }}
     <br />
     {{ input_tag(tags|map(attribute='tag')|list, 'Тэги', id='tag-main') }}
     <br />

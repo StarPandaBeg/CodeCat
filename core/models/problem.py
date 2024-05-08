@@ -35,6 +35,8 @@ class Problem(Base):
     data_in: Mapped[str] = mapped_column(sa.Text())
     data_out: Mapped[str] = mapped_column(sa.Text())
 
+    link: Mapped[str] = mapped_column(sa.String(64), nullable=True)
+
     contest: Mapped["Contest"] = relationship(back_populates="problems")
 
     tags: Mapped[List[ProblemTag]] = relationship(

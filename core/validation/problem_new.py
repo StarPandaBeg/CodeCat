@@ -31,6 +31,7 @@ class ProblemNewForm(FormBase):
     data_in = TextAreaField('data_in')
     data_out = TextAreaField('data_out')
     example_description = TextAreaField('example_description')
+    link = StringField('link', [validators.Optional(), validators.URL()])
 
     examples = FieldList(FormField(ProblemExampleNewForm,
                                    default=lambda: ProblemExample()))

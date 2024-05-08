@@ -13,6 +13,9 @@
     <h1>{{ letter }} {{ problem.name }}</h1>
     <p>ограничение по времени на тест: {{ problem.time_limit }}</p>
     <p>ограничение по памяти на тест: {{ problem.memory_limit }}</p>
+    {% if problem.link %}
+    <p><a href="{{problem.link}}" target="_blank">Оригинал</a></p>
+    {% endif %}
   </div>
 
   {% call spoiler("Текст задачи", True) %}
@@ -130,6 +133,10 @@
   .problem-view .problem-view__title p {
     font-size: .9rem;
     opacity: .75;
+  }
+
+  .problem-view .problem-view__title p a {
+    color: darkblue;
   }
 
   .problem-view .problem-view__problem,
