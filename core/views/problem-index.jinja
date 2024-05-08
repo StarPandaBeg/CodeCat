@@ -24,10 +24,9 @@
   </thead>
   <tbody>
     {% for problem in problems %}
-    {% set letter = problem.letter+". " if problem.letter else "" %}
 
     <tr class="{{ problem.css_class }}">
-      <td>{{ letter -}} {{ problem.name }}</td>
+      <td>{{ problem.name }}</td>
       <td>{{ problem.contest.name if problem.contest else '<без соревнования>' }}</td>
       <td>
         {% for tag in problem.tags %}
