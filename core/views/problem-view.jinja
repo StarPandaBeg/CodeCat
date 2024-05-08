@@ -47,7 +47,7 @@
   </div>
   {% endfor %}
   {% if problem.example_description %}
-  <p class="example-description">{{ problem.example_description | e | markdown }}</p>
+  <div class="example-description">{{ problem.example_description | e | markdown }}</div>
   {% endif %}
   {% endcall %}
 
