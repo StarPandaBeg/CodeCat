@@ -1,0 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Application data
+.data/
+
+# Folder for static resources related to problems
+static/storage
+
+# Config files
+config/*.json
+!config/*.example.json
+
+# VS Code
+.vscode/
