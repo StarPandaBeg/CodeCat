@@ -6,7 +6,6 @@ from filters import init_jinja_filters
 from core.routes import register_routes
 from core.database import db_session, init_db
 from flask import Flask
-import json
 
 
 def create_flask_app():
@@ -21,7 +20,7 @@ def create_flask_app():
 
 
 def _import_flask_config(app: Flask):
-    app.config.from_file('config/flask.json', load=json.load)
+    app.config.from_prefixed_env()
 
 
 app = create_flask_app()
