@@ -8,8 +8,6 @@ services:
     env_file:
       - path: .env
         required: true
-    environment:
-      - FLASK_SERVER_NAME="localhost:15356"
     volumes:
       - codecat-data:/app/.data
 
