@@ -6,7 +6,7 @@
    <h3 align="center">CodeCat - CodeForces problem storage</h3>
 
    <p align="center">
-      Simple Task Tracker: Efficiently Organize and Solve Challenges
+      Simple problem & solution storage for codeforces, leetcode, etc.
    </p>
 </p>
 
@@ -26,42 +26,45 @@ This is a simple pet project created for learning Flask and organizing personal 
 
 # Getting started
 
+0. In any chosen installation way, you need to set FLASK_SECRET_KEY environment variable to some unique string. 
+
+   You can do this, for example, by creating `.env` file from example:
+   ```
+   FLASK_SECRET_KEY="018fef43f3697937b4b7357502ebe21b"
+
+   DATABASE_URL="sqlite:///.data/database.db"
+   ```
+   > ⚠ Keep your secret key in private. Do not use value from above!
+
+## Docker Compose Support
+
+1. You can install this app from container
+
+   ```
+   $ docker compose up
+   ```
+
+## Manual
+
 1. Ensure you have Python 3.10 installed
    ```
    $ python --version
    Python 3.10.8
    ```
-1. Clone project & install dependencies
+1. Install dependencies
    ```
-   $ git clone https://github.com/StarPandaBeg/CodeCat
-   $ cd CodeCat
    $ pip install -r requirements.txt
    ```
-1. Make Initial run
+1. Run app
 
    ```
    $ flask run
    ```
 
-   After that, initial configuration file will be created at `config/flask.json`
+   > ⚠ Ensure you have set the secret key on step 0.
 
-1. Add encryption key
 
-   Set `SECRET_KEY` variable in the `config/flask.json` to any unique string.
-
-   ```
-   {
-      "SERVER_NAME": "localhost:5000",
-      "SECRET_KEY": "3d6f45a5fc12445dbac2f59c3b6c7cb1"
-   }
-   ```
-
-1. Run application again
-   ```
-   $ flask run
-   ```
-
-Open your web browser and visit `http://localhost:5000`. You should see a basic app page.
+Open your web browser and visit `http://localhost:15356`. You should see a basic app page.
 
 # License
 
